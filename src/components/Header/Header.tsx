@@ -3,111 +3,80 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenu, HiX, HiArrowRight } from 'react-icons/hi';
-import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/services', label: 'Pillars' },
+    { href: '/',        label: 'Home' },
+    { href: '/about',   label: 'About' },
+    { href: '/services',label: 'Pillars' },
     { href: '/contact', label: 'Inquiry' },
   ];
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-[#F5F0E8]/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border-b border-[#0D1B2A]/10 dark:border-white/10 shadow-md'
-          : 'bg-[#F5F0E8]/0 lg:bg-transparent'
-      }`}
-      style={{
-        backgroundColor: scrolled ? undefined : (typeof window !== 'undefined' && window.innerWidth < 1024 ? 'rgba(245, 240, 232, 0.8)' : 'transparent')
-      }}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <div className="container mx-auto fluid-container">
-        <nav className={`flex justify-between items-center transition-all duration-700 ${
-          scrolled ? 'py-4 md:py-6' : 'py-6 md:py-10 lg:py-16'
-        }`}>
-          {/* Logo / Personal Mark */}
-          <Link href="/" className="group flex items-center space-x-2">
-            <motion.div
-              className="flex flex-col"
-              whileHover={{ opacity: 0.8 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span className="font-display text-2xl md:text-3xl tracking-tight text-[#0D1B2A] dark:text-[#F5F0E8] leading-none">
-                Zeki Ubor
-              </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[#C9A84C] font-semibold mt-1">
-                Human Architecture
-              </span>
-            </motion.div>
-          </Link>
+    <>
+      <header className={`ed-nav${scrolled ? ' scrolled' : ''}`}>
+        {/* Left — Brand */}
+        <Link href="/" className="ed-nav__brand" aria-label="Zeki Ubor home">
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text)', lineHeight: 1 }}>
+            Zeki Ubor
+          </span>
+          <span className="ed-label" style={{ marginTop: '3px' }}>Human Architecture</span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-12 xl:gap-16">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}
-              >
-                <Link
-                  href={item.href}
-                  className="relative group py-2"
-                >
-                  <span className="text-sm uppercase tracking-widest font-medium text-[#0D1B2A] dark:text-[#F5F0E8]/80 group-hover:text-[#C9A84C] transition-colors duration-300">
-                    {item.label}
-                  </span>
-                  <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#C9A84C] transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-              </motion.div>
+        {/* Center — Links */}
+        <nav aria-label="Main navigation">
+          <ul className="ed-nav__links">
+            {navItems.map(item => (
+              <li key={item.href}>
+                <Link href={item.href}>{item.label}</Link>
+              </li>
             ))}
-          </div>
-
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-6">
-            <ThemeToggle />
-            <Link 
-              href="/audit" 
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#0D1B2A] dark:bg-[#F5F0E8] text-[#F5F0E8] dark:text-[#0D1B2A] text-[10px] uppercase tracking-[0.2em] font-bold rounded-none transition-all duration-500 hover:bg-[#C9A84C] hover:text-[#0D1B2A] dark:hover:bg-[#C9A84C]"
-            >
-              Architecture Audit
-              <HiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center lg:hidden space-x-4">
-            <ThemeToggle />
-            <motion.button
-              onClick={() => setIsOpen(true)}
-              className="p-2 text-[#0D1B2A] dark:text-[#F5F0E8] transition-all duration-300"
-              whileTap={{ scale: 0.95 }}
-              aria-label="Open menu"
-            >
-              <HiMenu className="w-8 h-8" />
-            </motion.button>
-          </div>
+          </ul>
         </nav>
-      </div>
 
-      {/* Mobile Menu */}
+        {/* Right — CTA + Mobile toggle */}
+        <div className="ed-nav__right" style={{ gap: '1.25rem', display: 'flex', alignItems: 'center' }}>
+          <Link
+            href="/contact"
+            className="ed-btn ed-btn--gold"
+            style={{ display: 'none' }}
+            id="header-cta-desktop"
+          >
+            Inquiry
+            <HiArrowRight style={{ width: 12, height: 12 }} />
+          </Link>
+          <style>{`
+            @media (min-width: 768px) {
+              #header-cta-desktop { display: inline-flex !important; }
+            }
+          `}</style>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', display: 'flex' }}
+            className="md-menu-btn"
+            id="mobile-menu-btn"
+          >
+            <HiMenu style={{ width: 22, height: 22 }} />
+          </button>
+          <style>{`
+            @media (min-width: 768px) { #mobile-menu-btn { display: none !important; } }
+          `}</style>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -115,76 +84,82 @@ export default function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-[#0D1B2A]/60 backdrop-blur-md z-[60] lg:hidden"
               onClick={() => setIsOpen(false)}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 200 }}
             />
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 h-full w-full max-w-sm bg-[#F5F0E8] dark:bg-[#1C1C1E] z-[70] lg:hidden border-l border-[#0D1B2A]/10 dark:border-white/10 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+              transition={{ type: 'spring', damping: 30, stiffness: 280 }}
+              style={{
+                position: 'fixed', right: 0, top: 0, bottom: 0,
+                width: '100%', maxWidth: 320,
+                background: 'var(--bg-alt)',
+                borderLeft: '1px solid var(--border)',
+                zIndex: 201,
+                display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                padding: '2.5rem 2rem',
+              }}
             >
-              <div className="flex flex-col h-full">
-                {/* Mobile Header */}
-                <div className="flex justify-between items-center p-8 border-b border-[#0D1B2A]/5 dark:border-white/5">
-                  <div className="flex flex-col">
-                    <span className="font-display text-2xl tracking-tight text-[#0D1B2A] dark:text-[#F5F0E8]">
-                      Zeki Ubor
-                    </span>
-                  </div>
-                  <motion.button
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text)' }}>
+                    Zeki Ubor
+                  </span>
+                  <button
                     onClick={() => setIsOpen(false)}
-                    className="p-2 text-[#0D1B2A] dark:text-[#F5F0E8] transition-all duration-300"
-                    whileTap={{ scale: 0.95 }}
                     aria-label="Close menu"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}
                   >
-                    <HiX className="w-8 h-8" />
-                  </motion.button>
+                    <HiX style={{ width: 22, height: 22 }} />
+                  </button>
                 </div>
 
-                {/* Mobile Navigation */}
-                <nav className="flex-1 px-8 py-12">
-                  <div className="space-y-8">
-                    {navItems.map((item, index) => (
-                      <motion.div
-                        key={item.href}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.3 }}
+                <nav>
+                  {navItems.map((item, i) => (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.06 }}
+                    >
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        style={{
+                          display: 'block',
+                          padding: '0.85rem 0',
+                          borderBottom: '1px solid var(--border)',
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '1.5rem',
+                          fontWeight: 600,
+                          color: 'var(--text)',
+                          textDecoration: 'none',
+                          letterSpacing: '-0.01em',
+                          transition: 'color 0.2s ease',
+                        }}
                       >
-                        <Link
-                          href={item.href}
-                          onClick={() => setIsOpen(false)}
-                          className="block text-2xl uppercase tracking-widest font-light text-[#0D1B2A] dark:text-[#F5F0E8] hover:text-[#C9A84C] transition-all duration-300 group"
-                        >
-                          <span className="flex items-center justify-between">
-                            {item.label}
-                            <HiArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-2" />
-                          </span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  ))}
                 </nav>
-
-                {/* Mobile Actions */}
-                <div className="p-8 pb-16 border-t border-[#0D1B2A]/5 dark:border-white/5">
-                  <Link
-                    href="/audit"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-center gap-4 px-8 py-5 bg-[#0D1B2A] dark:bg-[#F5F0E8] text-[#F5F0E8] dark:text-[#0D1B2A] text-sm uppercase tracking-[0.2em] font-bold transition-all duration-500 hover:bg-[#C9A84C]"
-                  >
-                    Take the Audit
-                    <HiArrowRight className="w-5 h-5" />
-                  </Link>
-                </div>
               </div>
+
+              <Link
+                href="/contact"
+                onClick={() => setIsOpen(false)}
+                className="ed-btn ed-btn--gold"
+                style={{ width: '100%', justifyContent: 'center', marginTop: '2rem' }}
+              >
+                Start an Inquiry
+                <HiArrowRight style={{ width: 14, height: 14 }} />
+              </Link>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }

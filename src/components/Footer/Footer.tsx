@@ -1,93 +1,116 @@
 'use client';
-import { FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { FaLinkedinIn, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const socialLinks = [
-  { name: 'LinkedIn', icon: FaLinkedinIn, href: 'https://linkedin.com' },
-  { name: 'Twitter', icon: FaTwitter, href: 'https://twitter.com' },
-  { name: 'Instagram', icon: FaInstagram, href: 'https://instagram.com' },
-  { name: 'YouTube', icon: FaYoutube, href: 'https://youtube.com' },
-  { name: 'WhatsApp', icon: FaWhatsapp, href: 'https://chat.whatsapp.com' }
+const socials = [
+  { name: 'LinkedIn',  icon: FaLinkedinIn, href: 'https://linkedin.com/in/zekiubor' },
+  { name: 'X / Twitter',icon: FaXTwitter,   href: 'https://x.com/zekiubor' },
+  { name: 'Instagram', icon: FaInstagram,   href: 'https://instagram.com/zekiubor' },
+  { name: 'YouTube',   icon: FaYoutube,     href: 'https://youtube.com/@zekiubor' },
+  { name: 'WhatsApp',  icon: FaWhatsapp,    href: 'https://wa.me/2349119059859' },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0D1B2A] text-[#F5F0E8] fluid-section overflow-hidden border-t border-white/5">
-      <div className="container mx-auto fluid-container">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-20 lg:gap-32 mb-24 md:mb-48">
-          {/* Brand Identity */}
-          <motion.div 
-            className="max-w-md"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-display text-4xl md:text-5xl tracking-tight mb-4">
+    <footer
+      style={{
+        borderTop: '1px solid var(--border)',
+        background: 'var(--bg)',
+        paddingTop: 'clamp(4rem, 10vh, 7rem)',
+        paddingBottom: '2.5rem',
+      }}
+    >
+      <div className="ed-wrap">
+        {/* Top — brand + social */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
+            alignItems: 'flex-end',
+            gap: '2rem',
+            marginBottom: '4rem',
+          }}
+        >
+          {/* Brand block */}
+          <div>
+            <p className="ed-label" style={{ marginBottom: '1rem' }}>[ Human Architecture ]</p>
+            <h2
+              className="ed-h1"
+              style={{ color: 'var(--text)', marginBottom: '1.25rem', maxWidth: 520 }}
+            >
               Zeki Ubor
             </h2>
-            <p className="text-[#C9A84C] font-semibold uppercase tracking-[0.2em] text-sm mb-6">
-              Human Architecture
+            <p className="ed-body" style={{ maxWidth: 420 }}>
+              Equipping founders, executives, and organizations with architectural frameworks to scale
+              under pressure and engineer sustainable impact.
             </p>
-            <p className="text-[#F5F0E8]/60 text-lg font-light leading-relaxed">
-              Equipping individuals and organizations with the architectural 
-              frameworks to access their highest potential and lead with purpose.
-            </p>
-          </motion.div>
+          </div>
 
-          {/* Quick Links */}
-          <motion.div 
-            className="grid grid-cols-2 gap-16 md:gap-32 lg:gap-40"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <div>
-              <h4 className="text-xs uppercase tracking-[0.3em] font-bold text-[#C9A84C] mb-8">Navigation</h4>
-              <ul className="space-y-4">
-                <li><Link href="/" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">Home</Link></li>
-                <li><Link href="/about" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">About</Link></li>
-                <li><Link href="/services" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">Pillars</Link></li>
-                <li><Link href="/contact" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">Inquiry</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xs uppercase tracking-[0.3em] font-bold text-[#C9A84C] mb-8">Resources</h4>
-              <ul className="space-y-4">
-                <li><Link href="/audit" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">Architecture Audit</Link></li>
-                <li><Link href="/newsletter" className="text-[#F5F0E8]/70 hover:text-[#C9A84C] transition-colors duration-300 font-light">Architecture Letter</Link></li>
-              </ul>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="pt-12 border-t border-[#F5F0E8]/10 flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Social Icons */}
-          <div className="flex space-x-6">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
+          {/* Social pills */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'flex-end' }}>
+            {socials.map(s => {
+              const Icon = s.icon;
               return (
                 <motion.a
-                  key={social.name}
-                  href={social.href}
+                  key={s.name}
+                  href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#F5F0E8]/40 hover:text-[#C9A84C] transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  aria-label={social.name}
+                  aria-label={s.name}
+                  whileHover={{ x: -4 }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-muted)',
+                    textDecoration: 'none',
+                    transition: 'color 0.25s ease',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                 >
-                  <Icon className="w-6 h-6" />
+                  <Icon style={{ width: 14, height: 14 }} />
+                  {s.name}
                 </motion.a>
               );
             })}
           </div>
+        </div>
 
-          {/* Copyright */}
-          <div className="text-[#F5F0E8]/30 text-xs uppercase tracking-widest font-medium">
-            © {new Date().getFullYear()} Zeki Ubor. All rights reserved.
+        {/* Rule */}
+        <hr className="ed-rule" style={{ marginBottom: '2rem' }} />
+
+        {/* Bottom bar */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem' }}>
+          <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+            {[
+              { href: '/',          label: 'Home' },
+              { href: '/about',     label: 'About' },
+              { href: '/services',  label: 'Pillars' },
+              { href: '/contact',   label: 'Inquiry' },
+              { href: '/newsletter',label: 'Letter' },
+            ].map(item => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="ed-label"
+                style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            <span className="ed-label">Lagos, Nigeria</span>
+            <span className="ed-label">© {new Date().getFullYear()} Zeki Ubor</span>
           </div>
         </div>
       </div>

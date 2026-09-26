@@ -1,221 +1,398 @@
 'use client';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { HiArrowRight, HiCheck } from 'react-icons/hi';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import { motion } from "framer-motion";
-import { HiArrowRight, HiOutlineUserGroup, HiOutlineLightBulb, HiOutlineOfficeBuilding } from "react-icons/hi";
-import Link from "next/link";
+import TiltCard from '@/components/TiltCard/TiltCard';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export default function Services() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }
-  };
+  const pillars = [
+    {
+      num: 'I',
+      badge: 'Division I',
+      title: 'The Becoming Institute',
+      tagline: 'Personal Evolution',
+      description: 'A sanctuary for individual transformation. Deconstruct limiting identities, develop original conviction, and build a self that commands lasting interest. Structured around the Human Architecture Framework — from identity and mindset, through systems and relationships, into expression and impact.',
+      focus: [
+        'Becoming a Person of Interest — Monthly Masterclass (Live, 3 hrs + Q&A)',
+        'Identity & Purpose Deconstruction (Foundation Layer)',
+        'Mindset & Belief Recalibration (Structural Layer)',
+        'Systems, Habits & Expression Design (Infrastructure to Facade)',
+      ],
+      deliverable: 'An original personal architecture — built deliberately, from the inside out, that commands presence in every room.',
+      cta: 'Join the Masterclass',
+      link: 'https://www.origin.com.ng',
+      external: true,
+    },
+    {
+      num: 'II',
+      badge: 'Division II',
+      title: 'Leadership Architecture',
+      tagline: 'Executive Authority',
+      description: 'Frameworks for leaders who need to design their influence with architectural precision and unshakeable authority. For founders, C-suite executives, and mid-career leaders who have built something real — but sense the foundation needs redesigning.',
+      focus: [
+        'Leadership Architecture — 1–2 Day Executive Immersion',
+        'Decision Friction Elimination & Cognitive Load Restructuring',
+        'High-Stakes Crisis Advisory & Ambiguity Resolution',
+        'Sovereign Presence & Non-Negotiable Operational Cadence',
+      ],
+      deliverable: 'A precision leadership system that eliminates 15+ hours of weekly decision latency and reduces executive cognitive load by 40%.',
+      cta: 'Book Executive Call',
+      link: 'https://calendly.com/mindvestglobalresources/30min',
+      external: true,
+    },
+    {
+      num: 'III',
+      badge: 'Division III',
+      title: 'Organisational Architecture',
+      tagline: 'Institutional Design',
+      description: 'Structural design for institutions seeking to align their human capital with their monumental vision. We partner with scaling enterprises and legacy corporations to build enduring cultural operating systems — not programmes, but infrastructure.',
+      focus: [
+        'Organisational Transformation Partnership — 6–12 Months',
+        'Institutional Culture Architecture & Value Infrastructure',
+        'Keynote Masterclasses & Corporate Leadership Summits',
+        'Cross-Functional Execution Frameworks & Human Capital Design',
+      ],
+      deliverable: 'A resilient, autonomous institutional culture that preserves alignment and accelerates performance through hyper-growth.',
+      cta: 'Partner With Us',
+      link: '/contact?pillar=org',
+      external: false,
+    },
+  ];
 
-  const sections = [
-    {
-      title: "The Becoming Institute",
-      tagline: "For Individuals",
-      color: "bg-[#C9A84C]",
-      textColor: "text-[#0D1B2A]",
-      icon: HiOutlineUserGroup,
-      description: "A sanctuary for personal evolution. We deconstruct legacy identities and blueprint a version of yourself that is engineered for global resonance.",
-      offers: [
-        "Personal Evolution Frameworks",
-        "Group Coaching Cohort — 8 weeks",
-        "Private 1:1 Coaching"
-      ],
-      cta: "Inquire for Coaching",
-      link: "/contact"
-    },
-    {
-      title: "The Leadership Architecture",
-      tagline: "For Leaders",
-      color: "bg-[#8B5E3C]",
-      textColor: "text-[#F5F0E8]",
-      icon: HiOutlineLightBulb,
-      description: "Providing executives and entrepreneurs with the structural frameworks to lead with unshakeable authority and visionary precision.",
-      offers: [
-        "Executive Coaching",
-        "Leadership Development Programs",
-        "Keynote Speaking"
-      ],
-      cta: "Work With Zeki",
-      link: "/contact"
-    },
-    {
-      title: "Organizational Architecture",
-      tagline: "For Organizations",
-      color: "bg-[#4A6FA5]",
-      textColor: "text-[#F5F0E8]",
-      icon: HiOutlineOfficeBuilding,
-      description: "Designing the internal mechanisms of institutions to ensure their human capital is aligned with their monumental vision.",
-      offers: [
-        "Culture Transformation",
-        "Corporate Training",
-        "Consulting Retainers"
-      ],
-      cta: "Partner With Mindvest Global",
-      link: "/contact"
-    }
+  const process = [
+    { step: 'B', title: 'Baseline',           desc: 'Audit where you are with radical honesty using the Architecture Diagnostic — uncovering the invisible hairline fractures before they trigger crisis.' },
+    { step: 'U', title: 'Uncover',            desc: 'Surface the beliefs, patterns, and inherited foundations that have been silently driving your architecture without your consent.' },
+    { step: 'I', title: 'Intentional Design', desc: 'Deliberately redesign each layer — starting with identity and purpose, moving through mindset, systems, relationships, and into expression.' },
+    { step: 'L', title: 'Layer & Live',       desc: 'Integrate the new architecture into daily life, leadership cadences, and institutional decision-making with precision.' },
+    { step: 'D', title: 'Declare & Deploy',   desc: 'Step into your full expression and impact with the total weight of who you have intentionally become.' },
+  ];
+
+  const reach = [
+    { code: '01', label: 'The Awakening',       sub: 'Ages 25–34 · Young professionals & early entrepreneurs seeking identity clarity' },
+    { code: '02', label: 'The Reconstruction',  sub: 'Ages 35–45 · Mid-career leaders & business owners seeking realignment' },
+    { code: '03', label: 'The Legacy Maker',    sub: 'Ages 45–55 · Senior executives seeking integrated leadership & cultural impact' },
+    { code: '04', label: 'Institutions',         sub: 'Corporations & enterprises in Lagos, Ogun State & global markets' },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8] text-[#0D1B2A]">
+    <div style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100svh', overflowX: 'hidden', position: 'relative' }}>
+      {/* Light subtle architectural ambient glow */}
+      <div className="ambient-glow-wrapper">
+        <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
+        <div className="ambient-orb-blue top-[35%] right-[-10%]" />
+        <div className="ambient-orb-purple bottom-[10%] left-[5%]" />
+      </div>
+
       <Header />
-      
-      <main>
-        {/* HERO SECTION */}
-        <section className="relative pt-72 pb-24 md:pt-72 md:pb-48 lg:pt-80 overflow-hidden border-b border-[#0D1B2A]/5">
-          <div className="container mx-auto fluid-container text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+
+      <main style={{ position: 'relative', zIndex: 1 }}>
+        {/* ── HERO ───────────────────────────────────────────── */}
+        <section
+          style={{
+            paddingTop: 'clamp(9rem, 18vh, 14rem)',
+            paddingBottom: 'var(--section-py)',
+            borderBottom: '1px solid var(--border)',
+          }}
+        >
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3.5rem' }}>
+              <motion.span
+                className="ed-label"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                [ Three Pillars ]
+              </motion.span>
+              <motion.span
+                className="ed-label"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                Operating Frameworks
+              </motion.span>
+            </div>
+
+            <motion.h1
+              className="ed-display"
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginBottom: '3rem', maxWidth: '100%' }}
             >
-              <h1 className="fluid-display mb-12 uppercase italic">Structural <br /> Pillars</h1>
+              Three Pillars<br />
+              <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>of</em> Human<br />
+              Architecture
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35 }}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
+                gap: '2rem',
+                alignItems: 'flex-end',
+              }}
+            >
+              <p style={{ maxWidth: 520, fontSize: 'clamp(0.95rem, 1.3vw, 1.15rem)', color: 'var(--text-muted)', lineHeight: 1.65, fontWeight: 300 }}>
+                Mindvest Global operates three divisions — personal evolution, leadership authority, and institutional design — with one governing conviction: transformation is not a feeling. It is a structure.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                <a href="https://www.origin.com.ng" target="_blank" rel="noopener noreferrer" className="ed-btn ed-btn--fill">
+                  Join the Masterclass
+                  <HiArrowRight style={{ width: 13, height: 13 }} />
+                </a>
+                <Link href="/contact" className="ed-btn">
+                  Inquire Now
+                </Link>
+              </div>
             </motion.div>
-            <motion.p 
-              className="text-xl md:text-2xl text-[#0D1B2A]/60 font-light max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              From personal identity to organizational culture, we provide the architectural blueprints for unshakeable impact.
-            </motion.p>
           </div>
         </section>
 
-        {/* PILLARS GRID */}
-        <section className="fluid-section bg-white/50 border-b border-[#0D1B2A]/5">
-          <div className="container mx-auto fluid-container">
-            <div className="grid lg:grid-cols-3 gap-12 sm:gap-16">
+        {/* ── STATS / OVERVIEW ROW ───────────────────────────── */}
+        <section style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div className="ed-grid-3">
               {[
-                { 
-                  title: "The Becoming Institute", 
-                  label: "Personal Evolution", 
-                  desc: "A sanctuary for individual transformation. Deconstruct limiting identities and build a self that commands interest.",
-                  color: "#C9A84C"
-                },
-                { 
-                  title: "Leadership Architecture", 
-                  label: "Executive Authority", 
-                  desc: "Frameworks for leaders to design their influence with architectural precision and unshakeable authority.",
-                  color: "#8B5E3C"
-                },
-                { 
-                  title: "Organizational Architecture", 
-                  label: "Institutional Design", 
-                  desc: "Structural design for institutions seeking to align their human capital with their monumental vision.",
-                  color: "#4A6FA5"
-                }
-              ].map((pillar, i) => (
-                <motion.div 
+                { num: 'Division I',   label: 'The Becoming Institute',    sub: 'Personal Evolution · Monthly Masterclass' },
+                { num: 'Division II',  label: 'Leadership Architecture',   sub: 'Executive Authority · 1–2 Day Immersion' },
+                { num: 'Division III', label: 'Organisational Architecture', sub: 'Institutional Design · 6–12 Month Partnership' },
+              ].map((stat, i) => (
+                <motion.div
                   key={i}
-                  className="group p-10 sm:p-12 bg-white border border-[#0D1B2A]/5 hover-lift glow-on-hover flex flex-col"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  {...fadeUp}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    padding: 'clamp(2rem, 5vh, 3.5rem) clamp(1.5rem, 4vw, 3rem)',
+                    borderRight: i < 2 ? '1px solid var(--border)' : 'none',
+                  }}
                 >
-                  <div className="w-12 h-1 mb-10" style={{ backgroundColor: pillar.color }} />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4" style={{ color: pillar.color }}>{pillar.label}</span>
-                  <h3 className="fluid-h3 mb-8 group-hover:translate-x-2 transition-transform duration-500">{pillar.title}</h3>
-                  <p className="text-[#0D1B2A]/60 font-light leading-relaxed mb-10 flex-1">{pillar.desc}</p>
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(1.8rem, 3.2vw, 3rem)',
+                      fontWeight: 700,
+                      color: 'var(--gold)',
+                      lineHeight: 1,
+                      marginBottom: '0.6rem',
+                    }}
+                  >
+                    {stat.num}
+                  </div>
+                  <div style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text)', marginBottom: '0.3rem' }}>
+                    {stat.label}
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text-subtle)' }}>{stat.sub}</div>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* SERVICES CONTENT */}
-        <section className="fluid-section">
-          <div className="container mx-auto fluid-container">
-            <div className="space-y-48 lg:space-y-72">
-              {sections.map((section, index) => {
-                const Icon = section.icon;
-                return (
-                  <motion.div 
-                    key={index}
-                    className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-20 lg:gap-48 items-center`}
-                    {...fadeInUp}
+        {/* ── PILLARS IN-DEPTH WITH GLASS & TILT ─────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ Deep Structural Practices ]</span>
+              <span className="ed-meta">Pillar Catalog</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+              {pillars.map((pillar, idx) => (
+                <TiltCard key={pillar.title} maxTilt={5} scale={1.015}>
+                  <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.9, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="glass-panel"
+                    style={{ padding: 'clamp(2.5rem, 5vw, 4.5rem)', borderRadius: '4px' }}
                   >
-                    {/* Visual/Icon Side */}
-                    <div className="lg:w-1/2 w-full aspect-square relative bg-white border border-[#0D1B2A]/5 p-12 md:p-24 flex items-center justify-center overflow-hidden group">
-                      <div className={`absolute top-0 ${index % 2 === 0 ? 'right-0' : 'left-0'} w-2 h-40 ${section.color} transition-all duration-700 group-hover:h-full`} />
-                      <div className="text-[250px] font-display opacity-[0.02] absolute select-none tracking-tighter leading-none">0{index + 1}</div>
-                      <div className={`w-36 h-36 md:w-48 md:h-48 ${section.color} ${section.textColor} flex items-center justify-center shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-105`}>
-                        <Icon className="w-16 h-16 md:w-20 md:h-20" />
-                      </div>
-                    </div>
+                    <div className="ed-grid-2" style={{ alignItems: 'start', gap: 'clamp(2rem, 5vw, 5rem)' }}>
+                      {/* Left Column */}
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                          <span style={{ fontSize: 10, letterSpacing: '0.25em', color: 'var(--gold)', textTransform: 'uppercase', fontWeight: 700 }}>
+                            {pillar.badge}
+                          </span>
+                          <span style={{ width: 24, height: 1, background: 'var(--border)' }} />
+                          <span style={{ fontSize: 10, letterSpacing: '0.15em', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>
+                            {pillar.tagline}
+                          </span>
+                        </div>
 
-                    {/* Content Side */}
-                    <div className="lg:w-1/2 w-full">
-                      <motion.span 
-                        className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C9A84C] mb-6 block"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                      >
-                        {section.tagline}
-                      </motion.span>
-                      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 leading-tight">{section.title}</h2>
-                      <p className="text-xl md:text-2xl text-[#0D1B2A]/70 font-light leading-relaxed mb-12">
-                        {section.description}
-                      </p>
-                      
-                      <div className="space-y-8 mb-16">
-                        {section.offers.map((offer, i) => (
-                          <motion.div 
-                            key={i} 
-                            className="flex items-center gap-6"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                          >
-                            <div className={`w-2 h-2 ${section.color} flex-shrink-0`} />
-                            <span className="text-base sm:text-lg font-medium tracking-tight text-[#0D1B2A]">{offer}</span>
-                          </motion.div>
-                        ))}
+                        <h2 className="ed-h2" style={{ marginBottom: '1.5rem' }}>
+                          {pillar.title}
+                        </h2>
+
+                        <p className="ed-body" style={{ marginBottom: '2rem' }}>
+                          {pillar.description}
+                        </p>
+
+                        <div style={{ borderLeft: '2px solid var(--gold)', paddingLeft: '1.25rem', marginBottom: '2.5rem' }}>
+                          <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', display: 'block', marginBottom: '0.25rem' }}>
+                            Primary Impact
+                          </span>
+                          <p style={{ fontSize: 13, color: 'var(--text)', fontStyle: 'italic', fontWeight: 400 }}>
+                            &ldquo;{pillar.deliverable}&rdquo;
+                          </p>
+                        </div>
+
+                        {pillar.external ? (
+                          <a href={pillar.link} target="_blank" rel="noopener noreferrer" className="ed-btn ed-btn--fill">
+                            {pillar.cta}
+                            <HiArrowRight style={{ width: 13, height: 13 }} />
+                          </a>
+                        ) : (
+                          <Link href={pillar.link} className="ed-btn ed-btn--fill">
+                            {pillar.cta}
+                            <HiArrowRight style={{ width: 13, height: 13 }} />
+                          </Link>
+                        )}
                       </div>
 
-                      <Link 
-                        href={section.link} 
-                        className={`group inline-flex items-center gap-6 px-8 sm:px-12 py-5 sm:py-6 ${section.color} ${section.textColor} font-bold uppercase tracking-[0.3em] text-[10px] sm:text-xs transition-all duration-500 shadow-2xl hover:bg-[#0D1B2A] hover:text-white`}
-                      >
-                        {section.cta}
-                        <HiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-                      </Link>
+                      {/* Right Column: Focus Deliverables */}
+                      <div style={{ borderLeft: '1px solid var(--border)', paddingLeft: 'clamp(1.5rem, 4vw, 3rem)' }}>
+                        <span className="ed-label" style={{ display: 'block', marginBottom: '1.75rem' }}>
+                          [ Core Deliverables & Frameworks ]
+                        </span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                          {pillar.focus.map((item, fIdx) => (
+                            <div key={fIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
+                              <div style={{ marginTop: '0.25rem', width: 14, height: 14, border: '1px solid var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                <HiCheck style={{ width: 10, height: 10, color: 'var(--gold)' }} />
+                              </div>
+                              <span style={{ fontSize: '0.95rem', color: 'var(--text)', fontWeight: 300, lineHeight: 1.55 }}>
+                                {item}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
-                );
-              })}
+                </TiltCard>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* BESPOKE SECTION */}
-        <section className="fluid-section bg-[#0D1B2A] text-[#F5F0E8] relative overflow-hidden">
-           {/* Subtle Architectural Pattern */}
-          <div className="absolute inset-0 opacity-5" style={{backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0V0zm1 1h58v58H1V1z' fill='%23C9A84C' fill-rule='evenodd'/%3E%3C/svg%3E")`}} />
-          
-          <div className="container mx-auto fluid-container text-center relative z-10">
-            <motion.div className="max-w-4xl mx-auto" {...fadeInUp}>
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C9A84C] mb-8 block">Bespoke Strategy</span>
-              <h2 className="font-display text-5xl md:text-7xl mb-12 italic leading-tight">Need a Custom <br className="hidden md:block" /> Architectural Blueprint?</h2>
-              <p className="text-xl md:text-2xl font-light mb-16 opacity-70 max-w-2xl mx-auto leading-relaxed">
-                For complex institutional challenges or high-stakes individual evolution, we offer direct consultation and tailored strategy design.
+        {/* ── IMPLEMENTATION CYCLE WITH TILT ─────────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ Transformation Method ]</span>
+              <span className="ed-meta">The BUILD Process</span>
+            </div>
+
+            <motion.h2 className="ed-h2" {...fadeUp} style={{ maxWidth: 640, marginBottom: '4rem' }}>
+              The BUILD Method
+            </motion.h2>
+
+            <div className="ed-grid-5" style={{ borderTop: '1px solid var(--border)' }}>
+              {process.map((p, i) => (
+                <TiltCard key={p.step} maxTilt={6} scale={1.015}>
+                  <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="glass-card"
+                    style={{
+                      padding: '2.5rem 1.5rem',
+                      height: '100%',
+                    }}
+                  >
+                    <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 700, color: 'var(--gold)', lineHeight: 1, marginBottom: '0.75rem' }}>
+                      {p.step}
+                    </div>
+                    <h3
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        fontSize: '1.15rem',
+                        fontWeight: 600,
+                        color: 'var(--text)',
+                        marginBottom: '0.6rem',
+                      }}
+                    >
+                      {p.title}
+                    </h3>
+                    <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.65 }}>
+                      {p.desc}
+                    </p>
+                  </motion.div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CLIENT & INSTITUTIONAL REACH ───────────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ Who We Serve ]</span>
+              <span className="ed-meta">Audience Profiles</span>
+            </div>
+
+            <div className="ed-grid-4" style={{ borderTop: '1px solid var(--border)' }}>
+              {reach.map((r, i) => (
+                <TiltCard key={r.code} maxTilt={5} scale={1.015}>
+                  <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.8, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="glass-card"
+                    style={{
+                      padding: '2.5rem 1.5rem',
+                      height: '100%',
+                    }}
+                  >
+                    <div style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: '0.2em', marginBottom: '1.25rem', fontWeight: 700 }}>
+                      {r.code}
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.4rem' }}>
+                      {r.label}
+                    </h4>
+                    <div style={{ fontSize: 11, color: 'var(--text-subtle)' }}>
+                      {r.sub}
+                    </div>
+                  </motion.div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CALL TO ACTION WITH GLASS PANEL ────────────────── */}
+        <section className="ed-section">
+          <div className="ed-wrap" style={{ maxWidth: 880 }}>
+            <div className="glass-panel-gold" style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem)', borderRadius: '4px' }}>
+              <span className="ed-label" style={{ display: 'block', marginBottom: '2.5rem' }}>[ Direct Engagement ]</span>
+              <motion.h2 className="ed-h2" {...fadeUp} style={{ marginBottom: '1.5rem' }}>
+                Ready to Begin Your Architecture?
+              </motion.h2>
+              <p className="ed-body" style={{ marginBottom: '3rem', maxWidth: 540 }}>
+                Whether you are an individual seeking transformation, an executive requiring a strategic immersion, or an institution building enduring culture — we begin with a conversation.
               </p>
-              <Link 
-                href="/contact" 
-                className="group inline-flex items-center gap-6 px-10 sm:px-16 py-6 sm:py-8 border border-[#C9A84C]/30 text-[#C9A84C] font-bold uppercase tracking-[0.4em] text-[10px] sm:text-xs transition-all duration-500 hover:bg-[#C9A84C] hover:text-[#0D1B2A] hover:border-[#C9A84C]"
-              >
-                Schedule A Private Consultation
-                <HiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-              </Link>
-            </motion.div>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <a href="https://calendly.com/mindvestglobalresources/30min" target="_blank" rel="noopener noreferrer" className="ed-btn ed-btn--fill">
+                  Book Executive Call
+                  <HiArrowRight style={{ width: 13, height: 13 }} />
+                </a>
+                <Link href="/contact" className="ed-btn">
+                  Submit an Inquiry
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       </main>

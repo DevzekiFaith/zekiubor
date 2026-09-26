@@ -1,338 +1,402 @@
 'use client';
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { HiArrowRight } from "react-icons/hi";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import { useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
-import { track } from "@vercel/analytics";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { HiArrowRight } from 'react-icons/hi';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import TiltCard from '@/components/TiltCard/TiltCard';
+import { useState } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import { track } from '@vercel/analytics';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export default function Home() {
-  const [auditName, setAuditName] = useState("");
-  const [auditEmail, setAuditEmail] = useState("");
-  const [isSubmittingAudit, setIsSubmittingAudit] = useState(false);
-  
-  const [newsEmail, setNewsEmail] = useState("");
+  const [newsEmail, setNewsEmail] = useState('');
   const [isSubmittingNews, setIsSubmittingNews] = useState(false);
-
-  const handleAuditSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!auditEmail) return toast.error("Please enter your email");
-    setIsSubmittingAudit(true);
-    
-    try {
-      const res = await fetch('/api/audit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: auditEmail, name: auditName })
-      });
-      
-      if (res.ok) {
-        toast.success("Structural Scan initiated! Starting download...");
-        track("audit_download", { email: auditEmail });
-        
-        // Trigger automatic download of the Audit lead magnet
-        const link = document.createElement('a');
-        link.href = '/Audit.pdf';
-        link.download = 'Architecture_Audit_ZekiUbor.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        setAuditName("");
-        setAuditEmail("");
-      } else {
-        toast.error("Failed to process audit. Please try again.");
-      }
-    } catch (error) {
-      toast.error("Connection error. Please check your network.");
-    } finally {
-      setIsSubmittingAudit(false);
-    }
-  };
 
   const handleNewsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newsEmail) return toast.error("Please enter your email");
+    if (!newsEmail) return toast.error('Please enter your email');
     setIsSubmittingNews(true);
-    
     try {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: newsEmail })
+        body: JSON.stringify({ email: newsEmail }),
       });
-      
       if (res.ok) {
-        toast.success("Subscribed to the Architecture Letter!");
-        track("newsletter_signup", { email: newsEmail, source: "homepage_footer" });
-        setNewsEmail("");
+        toast.success('Subscribed to the Architecture Letter!');
+        track('newsletter_signup', { email: newsEmail, source: 'homepage' });
+        setNewsEmail('');
       } else {
-        toast.error("Subscription failed. Please try again.");
+        toast.error('Subscription failed. Please try again.');
       }
-    } catch (error) {
-      toast.error("Connection error. Please check your network.");
+    } catch {
+      toast.error('Connection error. Please check your network.');
     } finally {
       setIsSubmittingNews(false);
     }
   };
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }
-  };
-
-  const staggerContainer = {
-    initial: {},
-    whileInView: { transition: { staggerChildren: 0.2 } },
-    viewport: { once: true }
-  };
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8] text-[#0D1B2A] selection:bg-[#C9A84C] selection:text-[#0D1B2A]">
-      <Toaster 
-        position="top-center" 
+    <div style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100svh', overflowX: 'hidden', position: 'relative' }}>
+      {/* Subtle architectural ambient diffusion */}
+      <div className="ambient-glow-wrapper">
+        <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
+        <div className="ambient-orb-blue top-[35%] right-[-10%]" />
+        <div className="ambient-orb-purple bottom-[10%] left-[5%]" />
+      </div>
+
+      <Toaster
+        position="top-center"
         toastOptions={{
           style: {
-            background: '#0D1B2A',
-            color: '#F5F0E8',
-            borderRadius: '0px',
-            fontFamily: 'var(--font-inter)',
-            fontSize: '14px',
-            border: '1px solid rgba(201, 168, 76, 0.3)'
+            background: 'var(--bg-alt)',
+            color: 'var(--text)',
+            border: '1px solid var(--border-strong)',
+            fontSize: 13,
+            borderRadius: 0,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
           },
-          success: {
-            iconTheme: { primary: '#C9A84C', secondary: '#0D1B2A' }
-          }
-        }} 
+          success: { iconTheme: { primary: '#A8822D', secondary: '#FFFFFF' } },
+        }}
       />
       <Header />
-      
-      <main>
-        {/* HERO SECTION */}
-        <section className="relative min-h-[90vh] flex items-center pt-72 pb-24 md:pt-72 md:pb-40 lg:pt-80 overflow-hidden">
-          <div className="container mx-auto fluid-container relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <h1 className="fluid-display mb-12 sm:mb-16">
-                The Architect <br />
-                <span className="italic">of</span> <br />
-                Human <span className="italic uppercase">Potential</span>
-              </h1>
-            </motion.div>
-            <div className="max-w-4xl">
-              <motion.span 
-                className="inline-block text-[#C9A84C] font-bold uppercase tracking-[0.3em] text-xs mb-6"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                Architecture for Potential
-              </motion.span>
-              
-              <motion.p 
-                className="text-lg sm:text-xl md:text-2xl text-[#0D1B2A]/70 font-light max-w-2xl mb-12 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                The question is not whether you have potential. <br className="hidden md:block" />
-                The question is whether you have the architecture to access it.
-              </motion.p>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              >
-                <Link 
-                  href="/audit" 
-                  className="group inline-flex items-center gap-4 px-10 py-5 bg-[#0D1B2A] text-[#F5F0E8] font-bold uppercase tracking-[0.2em] text-sm hover:bg-[#C9A84C] hover:text-[#0D1B2A] transition-all duration-500 shadow-2xl"
-                >
-                  Take The Architecture Audit — Free
-                  <HiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-                </Link>
-              </motion.div>
-            </div>
-          </div>
-          
-          {/* Vertical Scroll Indicator */}
-          <motion.div 
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-          >
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#0D1B2A]/30 rotate-90 mb-8 origin-center">Scroll</span>
-            <div className="w-[1px] h-20 bg-gradient-to-b from-[#0D1B2A]/30 to-transparent" />
-          </motion.div>
-        </section>
 
-        {/* ABOUT SNAPSHOT */}
-        <section className="fluid-section bg-white">
-          <div className="container mx-auto fluid-container">
-            <div className="flex flex-col md:flex-row items-end gap-12">
-              <div className="md:w-1/2">
-                <motion.h2 
-                  className="fluid-h2 mb-8"
-                  {...fadeInUp}
-                >
-                  A Master Architect <br /> of Human Potential
-                </motion.h2>
-              </div>
-              <div className="md:w-1/2">
-                <motion.div {...fadeInUp}>
-                  <p className="text-lg sm:text-xl md:text-2xl text-[#0D1B2A]/70 font-light leading-relaxed mb-10">
-                    A strategist for visionaries building internal structures for external impact. 
-                    True leadership is not found; it is engineered.
-                  </p>
-                  <Link 
-                    href="/about" 
-                    className="group inline-flex items-center gap-2 text-[#C9A84C] font-bold uppercase tracking-widest text-[10px] sm:text-xs border-b border-[#C9A84C]/30 pb-2 hover:border-[#C9A84C] transition-all duration-300"
-                  >
-                    Read the Full Story
-                    <HiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* WHAT I DO SECTION */}
-        <motion.section 
-          className="fluid-section bg-white/50 border-y border-[#0D1B2A]/5"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
+      <main style={{ position: 'relative', zIndex: 1 }}>
+        {/* ── HERO ───────────────────────────────────────────── */}
+        <section
+          style={{
+            paddingTop: 'clamp(9rem, 18vh, 14rem)',
+            paddingBottom: 'var(--section-py)',
+            borderBottom: '1px solid var(--border)',
+          }}
         >
-          <div className="container mx-auto fluid-container">
-            <h2 className="fluid-h2 mb-16 sm:mb-24 break-words">Architecting <br className="hidden sm:block" /> Your Evolution</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16">
+          <div className="ed-wrap">
+            {/* bracket label row */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3.5rem' }}>
+              <motion.span
+                className="ed-label"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                [ Human Architecture ]
+              </motion.span>
+              <motion.span
+                className="ed-label"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                Lagos · Pan-African · Global
+              </motion.span>
+            </div>
+
+            {/* Giant headline */}
+            <motion.h1
+              className="ed-display"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginBottom: '3rem', maxWidth: '100%' }}
+            >
+              The Architect<br />
+              <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>of</em> Human<br />
+              Potential
+            </motion.h1>
+
+            {/* Sub-row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35 }}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
+                gap: '2rem',
+                alignItems: 'flex-end',
+              }}
+            >
+              <p style={{ maxWidth: 480, fontSize: 'clamp(0.95rem, 1.3vw, 1.15rem)', color: 'var(--text-muted)', lineHeight: 1.65, fontWeight: 300 }}>
+                Architectural strategy for founders, executives, and visionaries — engineered to eliminate
+                decision friction, scale under pressure, and build sustainable impact.
+              </p>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                <Link href="/services" className="ed-btn ed-btn--fill">
+                  Explore Pillars
+                  <HiArrowRight style={{ width: 13, height: 13 }} />
+                </Link>
+                <Link href="/contact" className="ed-btn">
+                  Inquire
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── STATS ROW ──────────────────────────────────────── */}
+        <section style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div className="ed-grid-3">
               {[
-                { title: "Personal Mark", desc: "Crafting a unique leadership identity that commands interest.", icon: "01" },
-                { title: "Structural Logic", desc: "Designing mental frameworks that eliminate ambiguity.", icon: "02" },
-                { title: "The Becoming", desc: "Transforming internal narratives into actionable excellence.", icon: "03" }
-              ].map((item, i) => (
-                <div key={i} className="group p-8 border border-[#0D1B2A]/5 hover:bg-[#F5F0E8] transition-all duration-700">
-                  <span className="text-[10px] font-bold text-[#C9A84C] mb-6 block uppercase tracking-widest">Protocol {item.icon}</span>
-                  <h3 className="fluid-h3 mb-6 transition-transform duration-500 group-hover:translate-x-2">{item.title}</h3>
-                  <p className="text-base sm:text-lg text-[#0D1B2A]/60 font-light leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
+                { num: '40%',     label: 'Burnout Reduction',      sub: 'Through cognitive load restructuring' },
+                { num: '15+ Hrs', label: 'Saved Weekly',            sub: 'Eliminating decision friction' },
+                { num: '5 Layers',label: 'Potential Diagnostic',    sub: 'Holistic human architecture' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  {...fadeUp}
+                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16,1,0.3,1] }}
+                  style={{
+                    padding: 'clamp(2rem, 5vh, 3.5rem) clamp(1.5rem, 4vw, 3rem)',
+                    borderRight: i < 2 ? '1px solid var(--border)' : 'none',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(2.2rem, 4vw, 4rem)',
+                      fontWeight: 700,
+                      color: 'var(--gold)',
+                      lineHeight: 1,
+                      marginBottom: '0.6rem',
+                    }}
+                  >
+                    {stat.num}
+                  </div>
+                  <div style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text)', marginBottom: '0.3rem' }}>
+                    {stat.label}
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text-subtle)' }}>{stat.sub}</div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* LEAD MAGNET SECTION */}
-        <section className="fluid-section bg-white">
-          <div className="container mx-auto fluid-container">
-            <div className="grid lg:grid-cols-2 gap-20 items-center">
-              <motion.div {...fadeInUp}>
-                <h2 className="fluid-h2 mb-8">Determine Your Foundation</h2>
-                <p className="text-xl md:text-2xl text-[#0D1B2A]/70 font-light leading-relaxed mb-8">
-                  The Architecture Audit is a diagnostic tool designed to reveal the cracks in your personal and professional structures. 
-                </p>
-                <div className="space-y-6 mb-12">
-                  {[
-                    "Discover the 5 layers of human architecture.",
-                    "Identify the single layer holding you back.",
-                    "Get a personalized blueprint for restructuring."
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-4">
-                      <div className="mt-2 w-1.5 h-1.5 bg-[#C9A84C]" />
-                      <span className="text-[#0D1B2A]/60 font-light">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-[#F5F0E8] p-12 md:p-16 shadow-2xl relative overflow-hidden group hover-lift transition-all duration-700"
-                {...fadeInUp}
+        {/* ── ABOUT SNAPSHOT WITH GLASS & TILT ───────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            {/* Section label row */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ The Strategist ]</span>
+              <Link
+                href="/about"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none' }}
               >
-                {/* Decorative architectural elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A84C]/5 -rotate-45 translate-x-16 -translate-y-16" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 border-l border-b border-[#C9A84C]/20" />
-                
-                <div className="relative z-10">
-                  <div className="w-12 h-1 bg-[#C9A84C] mb-8" />
-                  <h3 className="fluid-h3 mb-2 break-words text-[#0D1B2A]">Download The Audit</h3>
-                  <p className="text-sm text-[#0D1B2A]/50 font-light mb-10">Start your architectural assessment today.</p>
-                  
-                  <form onSubmit={handleAuditSubmit} className="space-y-6">
-                    <div className="space-y-4">
-                      <input 
-                        type="text" 
-                        placeholder="Your Full Name" 
-                        value={auditName}
-                        onChange={(e) => setAuditName(e.target.value)}
-                        required
-                        className="w-full bg-white border border-[#0D1B2A]/10 px-6 py-4 text-sm focus:outline-none focus:border-[#C9A84C] transition-all placeholder:text-[#0D1B2A]/30"
-                      />
-                      <input 
-                        type="email" 
-                        placeholder="Your Professional Email" 
-                        value={auditEmail}
-                        onChange={(e) => setAuditEmail(e.target.value)}
-                        required
-                        className="w-full bg-white border border-[#0D1B2A]/10 px-6 py-4 text-sm focus:outline-none focus:border-[#C9A84C] transition-all placeholder:text-[#0D1B2A]/30"
-                      />
+                Full Story
+                <HiArrowRight style={{ width: 12, height: 12 }} />
+              </Link>
+            </div>
+
+            {/* Two-column */}
+            <div className="ed-grid-2" style={{ alignItems: 'center' }}>
+              <motion.div {...fadeUp}>
+                <h2 className="ed-h2" style={{ marginBottom: '1.75rem' }}>
+                  A Master Architect<br />
+                  <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>of</em> Human Potential
+                </h2>
+                <p className="ed-body" style={{ marginBottom: '2.5rem' }}>
+                  Zeki Ubor is not a traditional coach — he is an architect of the human condition. His
+                  core premise: <strong style={{ color: 'var(--text)', fontWeight: 600 }}>identity is not
+                  an accident, it is a deliberate architectural construction.</strong>
+                </p>
+                <Link href="/about" className="ed-btn ed-btn--gold">
+                  Read the Full Story
+                  <HiArrowRight style={{ width: 13, height: 13 }} />
+                </Link>
+              </motion.div>
+
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.9, delay: 0.15, ease: [0.16,1,0.3,1] }}
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}
+              >
+                {[
+                  { n: '01', title: 'The Becoming Institute',   body: 'Systematic mastery of internal narrative, identity recalibration, and personal conviction.' },
+                  { n: '02', title: 'Executive Strategy',       body: 'High-leverage decision models designed for founders and enterprise executives.' },
+                  { n: '03', title: 'Leadership Architecture',  body: 'Structured frameworks that eliminate ambiguity in high-stakes leadership arenas.' },
+                  { n: '04', title: 'Organizational Design',    body: 'Internal mechanisms and culture infrastructure for institutions scaling with vision.' },
+                ].map((item, i) => (
+                  <TiltCard key={i} maxTilt={8} scale={1.02}>
+                    <div className="glass-card" style={{ padding: '1.75rem', height: '100%' }}>
+                      <div style={{ fontSize: 10, letterSpacing: '0.2em', color: 'var(--gold)', marginBottom: '1rem', fontWeight: 700 }}>{item.n}</div>
+                      <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.6rem' }}>{item.title}</h4>
+                      <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.65 }}>{item.body}</p>
                     </div>
-                    <button 
-                      type="submit"
-                      disabled={isSubmittingAudit}
-                      className="w-full py-5 bg-[#0D1B2A] text-white font-bold uppercase tracking-widest text-[10px] sm:text-xs hover:bg-[#C9A84C] hover:text-[#0D1B2A] transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed shadow-xl group/btn overflow-hidden relative"
-                    >
-                      <span className="relative z-10">{isSubmittingAudit ? "Initiating Scan..." : "Download For Free"}</span>
-                      <div className="absolute inset-0 bg-white/10 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
-                    </button>
-                    <p className="text-[10px] text-center text-[#0D1B2A]/30 uppercase tracking-[0.2em]">Confidential Diagnostic • Instant Access</p>
-                  </form>
-                </div>
+                  </TiltCard>
+                ))}
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* NEWSLETTER SECTION */}
-        <section className="fluid-section border-t border-[#0D1B2A]/5">
-          <div className="container mx-auto fluid-container text-center">
-            <motion.div className="max-w-3xl mx-auto" {...fadeInUp}>
-              <span className="inline-block text-[#C9A84C] font-bold uppercase tracking-[0.4em] text-[10px] mb-8">Weekly Enlightenment</span>
-              <h2 className="fluid-h2 mb-8 tracking-tight">The Architecture Letter</h2>
-              <p className="text-xl md:text-2xl text-[#0D1B2A]/70 font-light leading-relaxed mb-12">
-                Weekly deep-dives into identity, mindset, and becoming — straight to your inbox. 
-                Join 10,000+ visionaries who build with intention.
+        {/* ── THREE PROTOCOLS WITH TILT ──────────────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ Core Protocols ]</span>
+              <Link
+                href="/services"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none' }}
+              >
+                All Pillars
+                <HiArrowRight style={{ width: 12, height: 12 }} />
+              </Link>
+            </div>
+
+            <motion.h2
+              className="ed-h2"
+              {...fadeUp}
+              style={{ maxWidth: 640, marginBottom: '4rem' }}
+            >
+              Architecting Your Evolution
+            </motion.h2>
+
+            <div className="ed-grid-3" style={{ borderTop: '1px solid var(--border)' }}>
+              {[
+                { num: '01', title: 'Personal Mark',      tag: 'Identity Calibration',         body: 'Crafting an authentic leadership identity that commands attention and instills lasting authority.' },
+                { num: '02', title: 'Structural Logic',   tag: 'Cognitive Load Optimization',  body: 'Designing mental frameworks and decision protocols that eliminate ambiguity in high-stakes arenas.' },
+                { num: '03', title: 'The Becoming',       tag: 'Execution Architecture',       body: 'Transforming internal narratives into decisive execution, sustainable stamina, and lasting impact.' },
+              ].map((item, i) => (
+                <TiltCard key={i} maxTilt={6} scale={1.015}>
+                  <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16,1,0.3,1] }}
+                    className="glass-card"
+                    style={{
+                      padding: 'clamp(2.5rem, 6vh, 4rem) clamp(1.5rem, 3vw, 2.5rem)',
+                      height: '100%',
+                      display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '2.5rem',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
+                        <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.2em', color: 'var(--gold)', textTransform: 'uppercase', fontWeight: 700 }}>
+                          Protocol {item.num}
+                        </span>
+                        <span style={{ fontSize: 10, letterSpacing: '0.15em', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>{item.tag}</span>
+                      </div>
+                      <h3 className="ed-h3" style={{ marginBottom: '1rem' }}>{item.title}</h3>
+                      <p className="ed-body">{item.body}</p>
+                    </div>
+                    <Link href="/services" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+                    >
+                      Learn More <HiArrowRight style={{ width: 11, height: 11 }} />
+                    </Link>
+                  </motion.div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── QUOTE / PHILOSOPHY WITH GLASS PANEL ────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap" style={{ maxWidth: 960 }}>
+            <TiltCard maxTilt={4} scale={1.01}>
+              <div className="glass-panel-gold" style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem)', borderRadius: '4px' }}>
+                <span className="ed-label" style={{ display: 'block', marginBottom: '2.5rem' }}>[ The Realization ]</span>
+                <motion.blockquote
+                  {...fadeUp}
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.8rem, 4vw, 4rem)',
+                    fontWeight: 600,
+                    fontStyle: 'italic',
+                    lineHeight: 1.15,
+                    color: 'var(--text)',
+                    borderLeft: '3px solid var(--gold)',
+                    paddingLeft: 'clamp(1.5rem, 4vw, 3rem)',
+                    marginBottom: '2rem',
+                  }}
+                >
+                  &ldquo;The problem was never the business. It was the inner architecture beneath the business.&rdquo;
+                </motion.blockquote>
+                <p className="ed-body" style={{ maxWidth: 560, paddingLeft: 'clamp(1.5rem, 4vw, 3rem)' }}>
+                  As an architect, when a building shows distress, you don&apos;t repaint the facade —
+                  you inspect the foundations and recalibrate the structural frames.
+                </p>
+              </div>
+            </TiltCard>
+          </div>
+        </section>
+
+        {/* ── INDUSTRIES / REACH ──────────────────────────────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+              <span className="ed-label">[ Institutional Reach ]</span>
+            </div>
+            <div className="ed-grid-5" style={{ borderTop: '1px solid var(--border)' }}>
+              {[
+                { code: '01', name: 'Venture Capital',    sub: 'High-Growth Tech Funds' },
+                { code: '02', name: 'FinTech Unicorns',   sub: 'Payments & Digital Banking' },
+                { code: '03', name: 'Enterprise SaaS',    sub: 'B2B Software Platforms' },
+                { code: '04', name: 'Global Logistics',   sub: 'Supply Chain & Freight' },
+                { code: '05', name: 'Infrastructure',     sub: 'Energy & Strategic Assets' },
+              ].map((item, i) => (
+                <TiltCard key={i} maxTilt={5} scale={1.01}>
+                  <motion.div
+                    {...fadeUp}
+                    transition={{ duration: 0.8, delay: i * 0.07, ease: [0.16,1,0.3,1] }}
+                    className="glass-card"
+                    style={{
+                      padding: '2.5rem 1.5rem',
+                      height: '100%',
+                    }}
+                  >
+                    <div style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: '0.2em', marginBottom: '1.25rem', fontWeight: 700 }}>{item.code}</div>
+                    <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.4rem' }}>{item.name}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-subtle)' }}>{item.sub}</div>
+                  </motion.div>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── NEWSLETTER WITH GLASS PANEL ────────────────────── */}
+        <section className="ed-section">
+          <div className="ed-wrap" style={{ maxWidth: 840 }}>
+            <div className="glass-panel" style={{ padding: 'clamp(2.5rem, 5vw, 4.5rem)', borderRadius: '4px' }}>
+              <span className="ed-label" style={{ display: 'block', marginBottom: '2.5rem' }}>[ Weekly Dispatch ]</span>
+              <motion.h2 className="ed-h2" {...fadeUp} style={{ marginBottom: '1.5rem' }}>
+                The Architecture Letter
+              </motion.h2>
+              <p className="ed-body" style={{ marginBottom: '3rem', maxWidth: 480 }}>
+                Weekly deep-dives into mindset, identity, and personal architecture. Join 10,000+ visionaries.
               </p>
-              
-              <form onSubmit={handleNewsSubmit} className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
+              <form onSubmit={handleNewsSubmit} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <input
+                  type="email"
+                  placeholder="Your email address"
                   value={newsEmail}
-                  onChange={(e) => setNewsEmail(e.target.value)}
+                  onChange={e => setNewsEmail(e.target.value)}
                   required
-                  className="flex-1 bg-white border border-[#0D1B2A]/10 px-8 py-5 text-sm focus:outline-none focus:border-[#C9A84C] transition-colors"
+                  className="ed-input"
+                  style={{ flex: 1, minWidth: 240 }}
                 />
-                <button 
+                <button
                   type="submit"
                   disabled={isSubmittingNews}
-                  className="px-10 py-5 bg-[#0D1B2A] text-white font-bold uppercase tracking-widest text-xs hover:bg-[#C9A84C] hover:text-[#0D1B2A] transition-all duration-500 shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="ed-btn ed-btn--fill"
+                  style={{ opacity: isSubmittingNews ? 0.5 : 1 }}
                 >
-                  {isSubmittingNews ? "Wait..." : "Subscribe"}
+                  {isSubmittingNews ? 'Subscribing…' : 'Subscribe'}
+                  <HiArrowRight style={{ width: 13, height: 13 }} />
                 </button>
               </form>
-              <p className="mt-8 text-[10px] uppercase tracking-widest text-[#0D1B2A]/30">Join the Collective. Free Forever.</p>
-            </motion.div>
+            </div>
           </div>
         </section>
       </main>

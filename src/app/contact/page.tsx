@@ -1,212 +1,337 @@
 'use client';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { HiArrowRight, HiCheckCircle } from 'react-icons/hi';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import { motion } from "framer-motion";
-import { HiMail, HiPhone, HiLocationMarker, HiArrowRight } from "react-icons/hi";
-import { useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import TiltCard from '@/components/TiltCard/TiltCard';
+import { Toaster, toast } from 'react-hot-toast';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
+    name: '',
+    email: '',
+    subject: 'Pillar 01 — The Becoming Institute',
+    message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      return toast.error("Please fill in all required fields.");
+      return toast.error('Please complete all required fields.');
     }
-    
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
-      
       if (res.ok) {
-        toast.success("Message sent! I will be in touch soon.");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setSubmitted(true);
+        toast.success('Inquiry transmitted successfully.');
+        setFormData({ name: '', email: '', subject: 'Pillar 01 — The Becoming Institute', message: '' });
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error('Submission failed. Please email advisory@zekiubor.com directly.');
       }
-    } catch (error) {
-      toast.error("Failed to connect. Please check your connection.");
+    } catch {
+      toast.error('Network error. Please try again or reach out directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }
-  };
-
   return (
-    <div className="min-h-screen bg-[#F5F0E8] text-[#0D1B2A]">
-      <Toaster position="top-right" />
+    <div style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100svh', overflowX: 'hidden', position: 'relative' }}>
+      {/* Light subtle architectural ambient glow */}
+      <div className="ambient-glow-wrapper">
+        <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
+        <div className="ambient-orb-blue top-[35%] right-[-10%]" />
+        <div className="ambient-orb-purple bottom-[10%] left-[5%]" />
+      </div>
+
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: 'var(--bg-alt)',
+            color: 'var(--text)',
+            border: '1px solid var(--border-strong)',
+            fontSize: 13,
+            borderRadius: 0,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
+          },
+          success: { iconTheme: { primary: '#A8822D', secondary: '#FFFFFF' } },
+        }}
+      />
       <Header />
-      
-      <main>
-        {/* HERO SECTION */}
-        <section className="relative min-h-[90vh] flex items-center pt-72 pb-24 md:pt-72 md:pb-40 lg:pt-80 overflow-hidden border-b border-[#0D1B2A]/5">
-          <div className="container mx-auto fluid-container">
-            <div className="max-w-4xl">
-              <motion.span 
-                className="inline-block text-[#C9A84C] font-bold uppercase tracking-[0.4em] text-[10px] mb-8"
+
+      <main style={{ position: 'relative', zIndex: 1 }}>
+        {/* ── HERO ───────────────────────────────────────────── */}
+        <section
+          style={{
+            paddingTop: 'clamp(9rem, 18vh, 14rem)',
+            paddingBottom: 'var(--section-py)',
+            borderBottom: '1px solid var(--border)',
+          }}
+        >
+          <div className="ed-wrap">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3.5rem' }}>
+              <motion.span
+                className="ed-label"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-              >
-                Direct Inquiry
-              </motion.span>
-              <motion.h1 
-                className="fluid-h1 mb-12 uppercase"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
               >
-                Begin The <br />
-                <span className="italic">Dialogue</span>
-              </motion.h1>
-              <motion.p 
-                className="text-xl md:text-2xl text-[#0D1B2A]/60 font-light max-w-2xl leading-relaxed"
+                [ Direct Engagement ]
+              </motion.span>
+              <motion.span
+                className="ed-label"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                transition={{ duration: 1, delay: 0.2 }}
               >
-                True transformation starts with a single high-fidelity conversation. Reach out for consultations, speaking engagements, or professional inquiries.
-              </motion.p>
+                Lagos · Pan-African · Global
+              </motion.span>
             </div>
+
+            <motion.h1
+              className="ed-display"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginBottom: '3rem', maxWidth: '100%' }}
+            >
+              Initiate<br />
+              <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Strategic</em><br />
+              Dialogue
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35 }}
+            >
+              <p style={{ maxWidth: 520, fontSize: 'clamp(0.95rem, 1.3vw, 1.15rem)', color: 'var(--text-muted)', lineHeight: 1.65, fontWeight: 300 }}>
+                For private 1:1 executive partnership, cohort admissions at The Becoming Institute, or institutional culture architecture with Mindvest Global.
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* CONTACT CONTENT */}
-        <section className="fluid-section">
-          <div className="container mx-auto fluid-container">
-            <div className="grid lg:grid-cols-2 gap-24 lg:gap-40">
-              {/* Form Side */}
-              <motion.div {...fadeInUp}>
-                <h2 className="font-display text-3xl sm:text-4xl mb-12 uppercase italic">Send A Blueprint</h2>
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#0D1B2A]/50">Full Name *</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full bg-transparent border-b border-[#0D1B2A]/20 py-4 focus:border-[#C9A84C] outline-none transition-colors font-light"
-                        placeholder="Zeki Ubor"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#0D1B2A]/50">Professional Email *</label>
-                      <input 
-                        type="email" 
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full bg-transparent border-b border-[#0D1B2A]/20 py-4 focus:border-[#C9A84C] outline-none transition-colors font-light"
-                        placeholder="zeki@ubor.com"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#0D1B2A]/50">Subject *</label>
-                    <div className="relative">
-                      <select 
-                        required
-                        value={formData.subject}
-                        onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                        className="w-full bg-transparent border-b border-[#0D1B2A]/20 py-4 focus:border-[#C9A84C] outline-none transition-colors font-light appearance-none cursor-pointer"
-                      >
-                        <option value="" disabled className="bg-[#F5F0E8]">Select Inquiry Subject</option>
-                        <option value="Becoming Institute" className="bg-[#F5F0E8]">The Becoming Institute (Individual)</option>
-                        <option value="Leadership Architecture" className="bg-[#F5F0E8]">Leadership Architecture (Executive)</option>
-                        <option value="Organizational Architecture" className="bg-[#F5F0E8]">Organizational Architecture (Corporate)</option>
-                        <option value="Speaking Engagement" className="bg-[#F5F0E8]">Speaking Engagement</option>
-                        <option value="Architecture Audit" className="bg-[#F5F0E8]">Architecture Audit Inquiry</option>
-                        <option value="General Consultation" className="bg-[#F5F0E8]">General Consultation</option>
-                      </select>
-                      <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg className="w-4 h-4 text-[#C9A84C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#0D1B2A]/50">Message *</label>
-                    <textarea 
-                      rows={5}
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full bg-transparent border-b border-[#0D1B2A]/20 py-4 focus:border-[#C9A84C] outline-none transition-colors font-light resize-none"
-                      placeholder="Tell me about your architectural needs..."
-                    />
-                  </div>
-                  <button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group inline-flex items-center gap-6 px-12 py-6 bg-[#0D1B2A] text-white font-bold uppercase tracking-[0.4em] text-[10px] hover:bg-[#C9A84C] hover:text-[#0D1B2A] transition-all duration-500 shadow-2xl disabled:opacity-70"
+        {/* ── INQUIRY & CONTACT SECTION WITH GLASS & TILT ────── */}
+        <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="ed-wrap">
+            <div className="ed-grid-2" style={{ alignItems: 'start', gap: 'clamp(3rem, 7vw, 7rem)' }}>
+              {/* Left Column: Glass Form */}
+              <motion.div {...fadeUp}>
+                <span className="ed-label" style={{ display: 'block', marginBottom: '2rem' }}>
+                  [ Strategic Inquiry Form ]
+                </span>
+
+                {submitted ? (
+                  <div
+                    className="glass-panel-gold"
+                    style={{
+                      padding: '3rem 2rem',
+                      textAlign: 'center',
+                      borderRadius: '4px',
+                    }}
                   >
-                    {isSubmitting ? "Transmitting..." : "Send Inquiry"}
-                    <HiArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-                  </button>
-                </form>
+                    <HiCheckCircle style={{ width: 48, height: 48, color: 'var(--gold)', margin: '0 auto 1.5rem auto' }} />
+                    <h3 className="ed-h3" style={{ marginBottom: '1rem' }}>
+                      Inquiry Transmitted
+                    </h3>
+                    <p className="ed-body" style={{ maxWidth: 420, margin: '0 auto 2rem auto' }}>
+                      Your dossier has been securely routed to Zeki Ubor&apos;s executive advisory team. We will review your objectives and respond within 24–48 business hours.
+                    </p>
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="ed-btn ed-btn--gold"
+                    >
+                      Transmit Another Inquiry
+                    </button>
+                  </div>
+                ) : (
+                  <div className="glass-panel" style={{ padding: 'clamp(2rem, 4vw, 3rem)', borderRadius: '4px' }}>
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Dr. Julian Vance"
+                          value={formData.name}
+                          onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                          required
+                          className="ed-input"
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
+                          Corporate / Personal Email *
+                        </label>
+                        <input
+                          type="email"
+                          placeholder="e.g. julian@vanceventures.com"
+                          value={formData.email}
+                          onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                          required
+                          className="ed-input"
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
+                          Area of Engagement *
+                        </label>
+                        <select
+                          value={formData.subject}
+                          onChange={e => setFormData(prev => ({ ...prev, subject: e.target.value }))}
+                          className="ed-input"
+                          style={{ cursor: 'pointer', background: 'var(--bg)', color: 'var(--text)' }}
+                        >
+                          <option value="Pillar 01 — The Becoming Institute">Pillar 01 — The Becoming Institute (Identity & Cohorts)</option>
+                          <option value="Pillar 02 — Leadership Architecture">Pillar 02 — Leadership Architecture (Executive 1:1)</option>
+                          <option value="Pillar 03 — Mindvest Global">Pillar 03 — Mindvest Global (Corporate Culture)</option>
+                          <option value="Keynote & Masterclass Inquiries">Keynote & Masterclass Inquiries</option>
+                          <option value="General Strategic Advisory">General Strategic Advisory</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: '0.5rem' }}>
+                          Structural Context & Objectives *
+                        </label>
+                        <textarea
+                          rows={5}
+                          placeholder="Detail your current leadership terrain, institutional goals, or personal evolution priorities..."
+                          value={formData.message}
+                          onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
+                          required
+                          className="ed-textarea"
+                        />
+                      </div>
+
+                      <div style={{ paddingTop: '1rem' }}>
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="ed-btn ed-btn--fill"
+                          style={{ width: '100%', justifyContent: 'center', opacity: isSubmitting ? 0.6 : 1 }}
+                        >
+                          {isSubmitting ? 'Transmitting Dossier...' : 'Transmit Inquiry'}
+                          <HiArrowRight style={{ width: 13, height: 13 }} />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
               </motion.div>
 
-              {/* Info Side */}
-              <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
-                <h2 className="font-display text-3xl sm:text-4xl mb-12 uppercase italic">Direct Channels</h2>
-                <div className="space-y-16">
-                  <div className="flex items-start gap-8 group/info hover-lift">
-                    <div className="w-16 h-16 bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0 group-hover/info:bg-[#C9A84C] group-hover/info:text-white transition-colors duration-500">
-                      <HiMail className="w-6 h-6 text-[#C9A84C] group-hover/info:text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold uppercase tracking-widest text-[10px] text-[#0D1B2A]/50 mb-2">Electronic Mail</h4>
-                      <p className="text-xl sm:text-2xl font-light">unovaconsultingfirstafrica@gmail.com</p>
-                    </div>
-                  </div>
+              {/* Right Column: Direct Channels & Information */}
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}
+              >
+                <div>
+                  <span className="ed-label" style={{ display: 'block', marginBottom: '2rem' }}>
+                    [ Direct Channels ]
+                  </span>
                   
-                  <div className="flex items-start gap-8 group/info hover-lift">
-                    <div className="w-16 h-16 bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0 group-hover/info:bg-[#C9A84C] group-hover/info:text-white transition-colors duration-500">
-                      <HiPhone className="w-6 h-6 text-[#C9A84C] group-hover/info:text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold uppercase tracking-widest text-[10px] text-[#0D1B2A]/50 mb-2">Voice & Text</h4>
-                      <p className="text-xl sm:text-2xl font-light">+234 911 905 9859</p>
-                    </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    {[
+                      {
+                        title: 'Executive Advisory',
+                        email: 'advisory@zekiubor.com',
+                        desc: 'For private 1:1 executive partnership and crisis advisory.',
+                      },
+                      {
+                        title: 'The Becoming Institute',
+                        email: 'becoming@zekiubor.com',
+                        desc: 'Cohort applications, identity calibrations, and program inquiries.',
+                      },
+                      {
+                        title: 'Mindvest Global',
+                        email: 'enterprise@zekiubor.com',
+                        desc: 'Enterprise culture architecture, keynotes, and institutional audits.',
+                      },
+                    ].map((channel, i) => (
+                      <TiltCard key={i} maxTilt={6} scale={1.015}>
+                        <div className="glass-card" style={{ padding: '1.75rem' }}>
+                          <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', display: 'block', marginBottom: '0.4rem', fontWeight: 700 }}>
+                            Channel 0{i + 1}
+                          </span>
+                          <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 600, color: 'var(--text)', marginBottom: '0.3rem' }}>
+                            {channel.title}
+                          </h4>
+                          <a
+                            href={'mailto:' + channel.email}
+                            style={{ fontSize: 13, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s ease', display: 'inline-block', marginBottom: '0.4rem' }}
+                            onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                          >
+                            {channel.email}
+                          </a>
+                          <p style={{ fontSize: 11, color: 'var(--text-subtle)', lineHeight: 1.5 }}>
+                            {channel.desc}
+                          </p>
+                        </div>
+                      </TiltCard>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Operations & Turnaround with glass */}
+                <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '4px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                  <div>
+                    <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', display: 'block', marginBottom: '0.3rem', fontWeight: 700 }}>
+                      Primary Hub
+                    </span>
+                    <span style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500 }}>
+                      Lagos, Nigeria
+                    </span>
+                    <span style={{ fontSize: 11, color: 'var(--text-subtle)', display: 'block', marginTop: '0.2rem' }}>
+                      Global Engagements
+                    </span>
                   </div>
 
-                  <div className="flex items-start gap-8 group/info hover-lift">
-                    <div className="w-16 h-16 bg-[#C9A84C]/10 flex items-center justify-center flex-shrink-0 group-hover/info:bg-[#C9A84C] group-hover/info:text-white transition-colors duration-500">
-                      <HiLocationMarker className="w-6 h-6 text-[#C9A84C] group-hover/info:text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold uppercase tracking-widest text-[10px] text-[#0D1B2A]/50 mb-2">Primary Station</h4>
-                      <p className="text-xl sm:text-2xl font-light">Lagos, Nigeria</p>
-                    </div>
+                  <div>
+                    <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', display: 'block', marginBottom: '0.3rem', fontWeight: 700 }}>
+                      Response Protocol
+                    </span>
+                    <span style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500 }}>
+                      24–48 Hours
+                    </span>
+                    <span style={{ fontSize: 11, color: 'var(--text-subtle)', display: 'block', marginTop: '0.2rem' }}>
+                      Strict Confidentiality
+                    </span>
                   </div>
                 </div>
-                
-                {/* Visual architectural element */}
-                <div className="mt-24 p-12 border border-[#C9A84C]/20 bg-[#C9A84C]/5 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A84C]/10 -skew-x-12 transform translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-700" />
-                  <p className="text-[#0D1B2A]/70 italic font-light leading-relaxed relative z-10">
-                    &quot;A building is not just a place to be but a way to be. Your life is the most important structure you will ever design.&quot;
-                  </p>
-                </div>
+
+                {/* Blockquote with glass-panel-gold */}
+                <TiltCard maxTilt={4} scale={1.01}>
+                  <div className="glass-panel-gold" style={{ padding: '1.75rem', borderRadius: '4px', borderLeft: '3px solid var(--gold)' }}>
+                    <p style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: '1.15rem', color: 'var(--text)', lineHeight: 1.4, marginBottom: '0.5rem' }}>
+                      &ldquo;A building is not just a place to be, but a way to be. Your inner architecture is the most monumental structure you will ever design.&rdquo;
+                    </p>
+                    <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--gold)', fontWeight: 700 }}>
+                      — Zeki Ubor
+                    </span>
+                  </div>
+                </TiltCard>
               </motion.div>
             </div>
           </div>

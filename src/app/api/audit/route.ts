@@ -4,11 +4,14 @@ import { sendEmail } from '@/lib/email';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, company, role } = body;
+    const email = body.email;
+    const name = body.name || 'Visionary';
+    const company = body.company;
+    const role = body.role;
 
-    if (!email || !name) {
+    if (!email) {
       return NextResponse.json(
-        { success: false, error: 'Name and Email are required' },
+        { success: false, error: 'Email is required' },
         { status: 400 }
       );
     }
