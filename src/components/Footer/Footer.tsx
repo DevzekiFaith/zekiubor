@@ -108,7 +108,25 @@ export default function Footer() {
             ))}
           </nav>
 
-          <div style={{ display: 'flex', gap: '2rem' }}>
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+            <a
+              href="tel:+2349119059859"
+              className="ed-label"
+              style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+            >
+              +234 911 905 9859
+            </a>
+            <a
+              href="mailto:lightwavesupport@gmail.com"
+              className="ed-label"
+              style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+            >
+              lightwavesupport@gmail.com
+            </a>
             <span className="ed-label">Lagos, Nigeria</span>
             <span className="ed-label">© {new Date().getFullYear()} Zeki Ubor</span>
           </div>
