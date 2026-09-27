@@ -36,12 +36,13 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      const data = await res.json();
       if (res.ok) {
         setSubmitted(true);
         toast.success('Inquiry transmitted successfully.');
         setFormData({ name: '', email: '', subject: 'Pillar 01 — The Becoming Institute', message: '' });
       } else {
-        toast.error('Submission failed. Please email advisory@zekiubor.com directly.');
+        toast.error(data.error || 'Submission failed. Please email advisory@zekiubor.com directly.');
       }
     } catch {
       toast.error('Network error. Please try again or reach out directly.');

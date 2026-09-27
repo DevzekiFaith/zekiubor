@@ -13,7 +13,7 @@ export default function Newsletter() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return toast.error("Please enter your email");
-    
+
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/newsletter', {
@@ -21,12 +21,14 @@ export default function Newsletter() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
-      
+
+      const data = await res.json();
+
       if (res.ok) {
         toast.success("Subscribed to the Architecture Letter!");
         setEmail("");
       } else {
-        toast.error("Subscription failed. Please try again.");
+        toast.error(data.error || "Subscription failed. Please try again.");
       }
     } catch (error) {
       toast.error("Connection error. Please check your network.");
@@ -43,6 +45,16 @@ export default function Newsletter() {
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] text-[#0D1B2A]">
+      <style>{`
+        @media (max-width: 767px) {
+          .container { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          .fluid-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          .grid.md\\:grid-cols-3 { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .grid.md\\:grid-cols-3 { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
       <Toaster 
         position="top-center" 
         toastOptions={{

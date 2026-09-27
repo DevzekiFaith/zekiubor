@@ -28,14 +28,18 @@ export async function POST(req: NextRequest) {
     );
 
     if (!emailResult.success) {
-      return NextResponse.json({ success: false, error: 'Service failure' }, { status: 500 });
+      console.error('Email service failure:', emailResult.error);
+      return NextResponse.json(
+        { success: false, error: 'Email service failure', details: emailResult.error },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Newsletter form error:', error);
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
+      { success: false, error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

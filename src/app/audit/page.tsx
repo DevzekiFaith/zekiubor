@@ -15,7 +15,7 @@ export default function Audit() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return toast.error("Please fill in all fields");
-    
+
     // Email regex validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
@@ -29,11 +29,13 @@ export default function Audit() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      
+
+      const data = await res.json();
+
       if (res.ok) {
         toast.success("Structural Scan initiated! Starting download...");
         track("audit_download", { email: formData.email, name: formData.name });
-        
+
         // Trigger automatic download of the Audit lead magnet
         const link = document.createElement('a');
         link.href = '/Audit.pdf';
@@ -41,10 +43,10 @@ export default function Audit() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
+
         setIsDownloaded(true);
       } else {
-        toast.error("Failed to initiate scan. Please try again.");
+        toast.error(data.error || "Failed to initiate scan. Please try again.");
       }
     } catch (error) {
       toast.error("Connection error. Please check your network.");
@@ -62,6 +64,16 @@ export default function Audit() {
 
   return (
     <div className="min-h-screen bg-[#060913] text-[#F5F0E8] selection:bg-[#C9A84C] selection:text-[#060913] relative overflow-hidden">
+      <style>{`
+        @media (max-width: 767px) {
+          .container { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          .fluid-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          .grid.md\\:grid-cols-3 { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .grid.md\\:grid-cols-3 { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
       {/* Ambient glowing background orbs */}
       <div className="ambient-glow-wrapper">
         <div className="ambient-orb-gold top-[-5%] left-[-10%]" />

@@ -30,12 +30,13 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: newsEmail }),
       });
+      const data = await res.json();
       if (res.ok) {
         toast.success('Subscribed to the Architecture Letter!');
         track('newsletter_signup', { email: newsEmail, source: 'homepage' });
         setNewsEmail('');
       } else {
-        toast.error('Subscription failed. Please try again.');
+        toast.error(data.error || 'Subscription failed. Please try again.');
       }
     } catch {
       toast.error('Connection error. Please check your network.');
