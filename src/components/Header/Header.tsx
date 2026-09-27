@@ -145,6 +145,44 @@ export default function Header() {
                     </motion.div>
                   ))}
                 </nav>
+
+                {/* Quick Contact Info */}
+                <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <a
+                      href="tel:+2349119059859"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        fontSize: '0.9rem',
+                        color: 'var(--text-muted)',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      +234 911 905 9859
+                    </a>
+                    <a
+                      href="mailto:lightwavesupport@gmail.com"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        fontSize: '0.9rem',
+                        color: 'var(--text-muted)',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      lightwavesupport@gmail.com
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <Link

@@ -22,9 +22,33 @@ export default function Footer() {
         paddingBottom: '2.5rem',
       }}
     >
+      <style>{`
+        @media (max-width: 767px) {
+          .footer-top {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+          .footer-social {
+            align-items: flex-start !important;
+          }
+          .footer-bottom {
+            flex-direction: column !important;
+            gap: 1.5rem !important;
+          }
+          .footer-nav {
+            justify-content: center !important;
+          }
+          .footer-contact {
+            justify-content: center !important;
+            flex-direction: column !important;
+            gap: 1rem !important;
+          }
+        }
+      `}</style>
       <div className="ed-wrap">
         {/* Top — brand + social */}
         <div
+          className="footer-top"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr auto',
@@ -49,7 +73,7 @@ export default function Footer() {
           </div>
 
           {/* Social pills */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'flex-end' }}>
+          <div className="footer-social" style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', alignItems: 'flex-end' }}>
             {socials.map(s => {
               const Icon = s.icon;
               return (
@@ -86,8 +110,8 @@ export default function Footer() {
         <hr className="ed-rule" style={{ marginBottom: '2rem' }} />
 
         {/* Bottom bar */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem' }}>
-          <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+        <div className="footer-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem' }}>
+          <nav className="footer-nav" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
             {[
               { href: '/',          label: 'Home' },
               { href: '/about',     label: 'About' },
@@ -108,7 +132,7 @@ export default function Footer() {
             ))}
           </nav>
 
-          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+          <div className="footer-contact" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
             <a
               href="tel:+2349119059859"
               className="ed-label"
