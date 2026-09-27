@@ -28,6 +28,15 @@ export const metadata: Metadata = {
   keywords: "Zeki Ubor, Human Architecture, Leadership Architecture, Organizational Architecture, The Becoming Institute, Personal Development, Mindset coach",
   authors: [{ name: "Zeki Ubor" }],
   robots: "index, follow",
+  icons: {
+    icon: [
+      { url: '/icon.webp', type: 'image/webp' },
+    ],
+    apple: [
+      { url: '/icon.webp', type: 'image/webp' },
+    ],
+    shortcut: '/icon.webp',
+  },
   openGraph: {
     title: "Zeki Ubor | Human Architecture & Leadership",
     description: "Discover the architecture of your potential. Access the Architecture Audit and join a global community of leaders.",
@@ -35,6 +44,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://zekiubor.com",
     siteName: "Zeki Ubor",
+    images: [{ url: '/ZekiUbor.webp', width: 1080, height: 1080, alt: 'Zeki Ubor' }],
   },
 };
 

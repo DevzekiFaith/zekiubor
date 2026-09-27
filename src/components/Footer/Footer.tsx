@@ -135,8 +135,14 @@ export default function Footer() {
           <div className="footer-contact" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
             <a
               href="tel:+2349119059859"
-              className="ed-label"
-              style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+              style={{
+                fontSize: '10px',
+                fontWeight: 700,
+                letterSpacing: '0.18em',
+                color: 'var(--text-subtle)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
               onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
             >
@@ -144,8 +150,14 @@ export default function Footer() {
             </a>
             <a
               href="mailto:lightwavesupport@gmail.com"
-              className="ed-label"
-              style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+              style={{
+                fontSize: '10px',
+                fontWeight: 700,
+                letterSpacing: '0.18em',
+                color: 'var(--text-subtle)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
               onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
               onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
             >

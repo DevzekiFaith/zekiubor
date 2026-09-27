@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     // Send email to administrator
     const emailResult = await sendEmail(
-      'unovaconsultingfirstafrica@gmail.com',
+      'lightwavesupport@gmail.com',
       `New Inquiry: ${body.subject || 'No Subject'}`,
       `
       <div style="font-family: sans-serif; padding: 20px; line-height: 1.6;">

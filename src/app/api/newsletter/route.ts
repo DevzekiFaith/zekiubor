@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     // Send notification to admin
     const emailResult = await sendEmail(
-      'unovaconsultingfirstafrica@gmail.com',
+      'lightwavesupport@gmail.com',
       'New Newsletter Subscription',
       `
       <div style="font-family: sans-serif; padding: 20px; line-height: 1.6;">

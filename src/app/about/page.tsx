@@ -482,14 +482,27 @@ export default function About() {
                       <h3 className="ed-h3" style={{ marginBottom: '1rem' }}>{v.title}</h3>
                       <p className="ed-body">{v.body}</p>
                     </div>
-                    <Link
-                      href={v.href}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', textDecoration: 'none', transition: 'color 0.2s ease' }}
-                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
-                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
-                    >
-                      {v.cta} <HiArrowRight style={{ width: 11, height: 11 }} />
-                    </Link>
+                    {v.external ? (
+                      <a
+                        href={v.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+                      >
+                        {v.cta} <HiArrowRight style={{ width: 11, height: 11 }} />
+                      </a>
+                    ) : (
+                      <Link
+                        href={v.href}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-subtle)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+                        onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+                      >
+                        {v.cta} <HiArrowRight style={{ width: 11, height: 11 }} />
+                      </Link>
+                    )}
                   </motion.div>
                 </TiltCard>
               ))}

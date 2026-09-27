@@ -30,7 +30,7 @@ export default function Newsletter() {
       } else {
         toast.error(data.error || "Subscription failed. Please try again.");
       }
-    } catch (error) {
+    } catch {
       toast.error("Connection error. Please check your network.");
     } finally {
       setIsSubmitting(false);

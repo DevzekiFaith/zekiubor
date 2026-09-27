@@ -175,6 +175,7 @@ export default function Header() {
                         color: 'var(--text-muted)',
                         textDecoration: 'none',
                         transition: 'color 0.2s ease',
+                        textTransform: 'none',
                       }}
                       onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
