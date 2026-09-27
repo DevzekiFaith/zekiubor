@@ -60,7 +60,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${cormorantGaramond.variable} antialiased overflow-x-hidden`}>
+      <body className={`${inter.variable} ${cormorantGaramond.variable} antialiased overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
           {children}
         </ThemeProvider>

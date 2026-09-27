@@ -165,7 +165,7 @@ body {
   box-shadow: 0 6px 20px -6px rgba(168, 130, 45, 0.25);
 }
 .ed-btn--fill {
-  background: var(--text);
+  background: #1E3A8A;
   color: #FFFFFF;
   border-color: var(--text);
 }

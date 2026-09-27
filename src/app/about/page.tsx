@@ -63,6 +63,21 @@ export default function About() {
 
   return (
     <div style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100svh', overflowX: 'hidden', position: 'relative' }}>
+      <style>{`
+        @media (max-width: 767px) {
+          .ed-wrap { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          .ed-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          .ed-grid-2, .ed-grid-3, .ed-grid-4, .ed-grid-5 { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .hero-sub-row { grid-template-columns: 1fr !important; }
+          .hero-sub-row > div:last-child { justify-content: flex-start !important; }
+          .stats-row > div { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+          .stats-row > div:last-child { border-bottom: none !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .ed-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+          .ed-grid-5 { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+      `}</style>
       {/* Light subtle architectural ambient glow */}
       <div className="ambient-glow-wrapper">
         <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
@@ -117,6 +132,7 @@ export default function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.35 }}
+              className="hero-sub-row"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
@@ -143,7 +159,7 @@ export default function About() {
         {/* ── STATS ROW ──────────────────────────────────────── */}
         <section style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="ed-wrap">
-            <div className="ed-grid-3">
+            <div className="ed-grid-3 stats-row">
               {[
                 { num: '12+ Yrs',  label: 'Architectural Discipline', sub: 'Rooted in spatial logic and structural physics' },
                 { num: '5 Layers', label: 'Potential Diagnostic',     sub: 'Identity, Mindset, Values, Systems, Presentation' },
@@ -248,6 +264,51 @@ export default function About() {
                     Schedule Diagnostic
                   </Link>
                 </div>
+              </motion.div>
+            </div>
+
+            {/* Paradigm Shift Section with Content and Image */}
+            <div className="ed-grid-2" style={{ alignItems: 'center', marginTop: '4rem' }}>
+              {/* Left Column: Content */}
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h2 className="ed-h2" style={{ marginBottom: '1.75rem' }}>
+                  The Paradigm<br />
+                  <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Shift</em>
+                </h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <p className="ed-body">
+                    Transforming the way leaders think about personal architecture. The shift from surface-level fixes to foundational restructuring represents a fundamental change in how we approach human potential and leadership development.
+                  </p>
+                  <p className="ed-body">
+                    By applying structural engineering principles to human systems, we create frameworks that endure pressure, scale sustainably, and produce lasting impact. This paradigm shift moves beyond coaching into the realm of architectural design.
+                  </p>
+                  <p className="ed-body">
+                    The result is a new generation of leaders who don't just manage chaos — they architect stability from within, building internal systems that can withstand any external challenge.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Right Column: Image */}
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <TiltCard maxTilt={6} scale={1.02}>
+                  <div className="glass-panel" style={{ padding: '0.75rem', borderRadius: '4px' }}>
+                    <div className="ed-img-wrap" style={{ aspectRatio: '16/9', maxHeight: 400, position: 'relative' }}>
+                      <Image
+                        src="/paradigm-shift.jpg"
+                        alt="Paradigm Shift - Zeki Ubor speaking at event"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
+                </TiltCard>
               </motion.div>
             </div>
           </div>

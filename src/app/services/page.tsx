@@ -85,6 +85,21 @@ export default function Services() {
 
   return (
     <div style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100svh', overflowX: 'hidden', position: 'relative' }}>
+      <style>{`
+        @media (max-width: 767px) {
+          .ed-wrap { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          .ed-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+          .ed-grid-2, .ed-grid-3, .ed-grid-4, .ed-grid-5 { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .hero-sub-row { grid-template-columns: 1fr !important; }
+          .hero-sub-row > div:last-child { justify-content: flex-start !important; }
+          .stats-row > div { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+          .stats-row > div:last-child { border-bottom: none !important; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .ed-grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+          .ed-grid-5 { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+      `}</style>
       {/* Light subtle architectural ambient glow */}
       <div className="ambient-glow-wrapper">
         <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
@@ -139,6 +154,7 @@ export default function Services() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.35 }}
+              className="hero-sub-row"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
@@ -165,7 +181,7 @@ export default function Services() {
         {/* ── STATS / OVERVIEW ROW ───────────────────────────── */}
         <section style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="ed-wrap">
-            <div className="ed-grid-3">
+            <div className="ed-grid-3 stats-row">
               {[
                 { num: 'Division I',   label: 'The Becoming Institute',    sub: 'Personal Evolution · Monthly Masterclass' },
                 { num: 'Division II',  label: 'Leadership Architecture',   sub: 'Executive Authority · 1–2 Day Immersion' },
