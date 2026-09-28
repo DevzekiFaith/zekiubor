@@ -68,12 +68,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/icon.webp', type: 'image/webp', sizes: '512x512' },
+      { url: '/icon.png', type: 'image/png', sizes: '180x180' },
     ],
     apple: [
-      { url: '/icon.webp', type: 'image/webp', sizes: '180x180' },
+      { url: '/apple-touch-icon.png', type: 'image/png', sizes: '512x512' },
     ],
-    shortcut: '/icon.webp',
+    shortcut: '/icon.png',
   },
   openGraph: {
     title: "Zeki Ubor | Human Architecture & Leadership Strategist",
@@ -187,10 +187,10 @@ export default function RootLayout({
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Favicon — headshot image */}
-        <link rel="icon" href="/icon.webp" type="image/webp" sizes="512x512" />
-        <link rel="apple-touch-icon" href="/icon.webp" />
-        <link rel="shortcut icon" href="/icon.webp" type="image/webp" />
+        {/* Favicon — headshot PNG (PNG is universally supported across all browsers) */}
+        <link rel="icon" href="/icon.png" type="image/png" sizes="180x180" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="512x512" />
+        <link rel="shortcut icon" href="/icon.png" type="image/png" />
       </head>
       <body className={`${inter.variable} ${cormorantGaramond.variable} antialiased overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
