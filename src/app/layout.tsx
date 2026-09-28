@@ -69,7 +69,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/icon.webp', type: 'image/webp', sizes: '512x512' },
-      { url: '/favicon.ico', sizes: 'any' },
     ],
     apple: [
       { url: '/icon.webp', type: 'image/webp', sizes: '180x180' },
@@ -188,9 +187,10 @@ export default function RootLayout({
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Additional favicon fallback */}
-        <link rel="icon" href="/icon.webp" type="image/webp" />
+        {/* Favicon — headshot image */}
+        <link rel="icon" href="/icon.webp" type="image/webp" sizes="512x512" />
         <link rel="apple-touch-icon" href="/icon.webp" />
+        <link rel="shortcut icon" href="/icon.webp" type="image/webp" />
       </head>
       <body className={`${inter.variable} ${cormorantGaramond.variable} antialiased overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
