@@ -86,15 +86,61 @@ export default function Home() {
       <Header />
 
       <main style={{ position: 'relative', zIndex: 1 }}>
-        {/* ── HERO ───────────────────────────────────────────── */}
+        {/* ── HERO — Cinematic Masterclass Background ──────── */}
         <section
           style={{
-            paddingTop: 'clamp(9rem, 18vh, 14rem)',
-            paddingBottom: 'var(--section-py)',
+            position: 'relative',
+            minHeight: 'clamp(600px, 90vh, 900px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
             borderBottom: '1px solid var(--border)',
+            overflow: 'hidden',
           }}
         >
-          <div className="ed-wrap">
+          {/* Ken Burns cinematic background */}
+          <style>{`
+            @keyframes kenBurns {
+              0%   { transform: scale(1.08) translate(0px, 0px); }
+              50%  { transform: scale(1.14) translate(-1.5%, -1%); }
+              100% { transform: scale(1.08) translate(0px, 0px); }
+            }
+            .hero-cinema-img {
+              animation: kenBurns 20s ease-in-out infinite;
+              will-change: transform;
+            }
+          `}</style>
+
+          {/* Background image */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
+            <img
+              src="/hero-masterclass.jpg"
+              alt="Zeki Ubor speaking at a masterclass"
+              className="hero-cinema-img"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 20%',
+                display: 'block',
+              }}
+            />
+            {/* Gradient overlay — bottom-heavy for text readability */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.72) 75%, rgba(0,0,0,0.92) 100%)',
+            }} />
+            {/* Side vignette */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.2) 100%)',
+            }} />
+          </div>
+
+          {/* Content — sits above the image */}
+          <div className="ed-wrap" style={{ position: 'relative', zIndex: 1, paddingTop: 'clamp(9rem, 18vh, 14rem)', paddingBottom: 'clamp(3rem, 8vh, 5rem)' }}>
             {/* bracket label row */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3.5rem' }}>
               <motion.span
@@ -102,6 +148,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
+                style={{ color: 'rgba(255,255,255,0.65)' }}
               >
                 [ Human Architecture ]
               </motion.span>
@@ -110,6 +157,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
+                style={{ color: 'rgba(255,255,255,0.55)' }}
               >
                 Lagos · Pan-African · Global
               </motion.span>
@@ -121,7 +169,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ marginBottom: '3rem', maxWidth: '100%' }}
+              style={{ marginBottom: '3rem', maxWidth: '100%', color: '#fff', textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}
             >
               The Architect<br />
               <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>of</em> Human<br />
@@ -141,7 +189,7 @@ export default function Home() {
                 alignItems: 'flex-end',
               }}
             >
-              <p style={{ maxWidth: 480, fontSize: 'clamp(0.95rem, 1.3vw, 1.15rem)', color: 'var(--text-muted)', lineHeight: 1.65, fontWeight: 300 }}>
+              <p style={{ maxWidth: 480, fontSize: 'clamp(0.95rem, 1.3vw, 1.15rem)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.65, fontWeight: 300 }}>
                 Architectural strategy for founders, executives, and visionaries — engineered to eliminate
                 decision friction, scale under pressure, and build sustainable impact.
               </p>
@@ -150,7 +198,7 @@ export default function Home() {
                   Explore Pillars
                   <HiArrowRight style={{ width: 13, height: 13 }} />
                 </Link>
-                <Link href="/contact" className="ed-btn">
+                <Link href="/contact" className="ed-btn" style={{ borderColor: 'rgba(255,255,255,0.4)', color: '#fff' }}>
                   Inquire
                 </Link>
               </div>

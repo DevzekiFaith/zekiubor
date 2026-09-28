@@ -132,22 +132,45 @@ export default function Footer() {
             ))}
           </nav>
 
-          <div className="footer-contact" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-            <a
-              href="tel:+2349119059859"
-              style={{
-                fontSize: '10px',
-                fontWeight: 700,
-                letterSpacing: '0.18em',
-                color: 'var(--text-subtle)',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
-            >
-              +234 911 905 9859
-            </a>
+          <div className="footer-contact" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            {/* Phone + WhatsApp */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <a
+                href="tel:+2349119059859"
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  letterSpacing: '0.18em',
+                  color: 'var(--text-subtle)',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+              >
+                +234 911 905 9859
+              </a>
+              <motion.a
+                href="https://wa.me/2349119059859"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 24,
+                  height: 24,
+                  borderRadius: '50%',
+                  background: '#25D366',
+                  color: '#fff',
+                  flexShrink: 0,
+                }}
+              >
+                <FaWhatsapp style={{ width: 13, height: 13 }} />
+              </motion.a>
+            </div>
             <a
               href="mailto:lightwavesupport@gmail.com"
               style={{
