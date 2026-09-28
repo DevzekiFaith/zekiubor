@@ -83,6 +83,16 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-[#F5F0E8] text-[#0D1B2A] selection:bg-[#C9A84C] selection:text-[#0D1B2A]">
+      <style>{`
+        @media (max-width: 767px) {
+          .admin-header { padding: 1rem 1.5rem !important; }
+          .admin-header h1 { font-size: 0.85rem !important; }
+          .admin-header p { font-size: 8px !important; margin-left: 0.5rem !important; }
+          .admin-main { padding: 2rem 1rem !important; }
+          .admin-table th, .admin-table td { padding: 0.75rem !important; font-size: 0.8rem !important; }
+          .admin-table .truncate { max-width: 100px !important; }
+        }
+      `}</style>
       <Toaster 
         position="top-center" 
         toastOptions={{
@@ -97,7 +107,7 @@ export default function AdminDashboard() {
       />
 
       {/* Admin Header */}
-      <header className="bg-white border-b border-[#0D1B2A]/5 py-6 px-8 flex justify-between items-center sticky top-0 z-50">
+      <header className="admin-header bg-white border-b border-[#0D1B2A]/5 py-6 px-8 flex justify-between items-center sticky top-0 z-50">
         <div>
           <div className="flex items-center gap-3">
             <div className="w-6 h-[2px] bg-[#C9A84C]" />
@@ -113,7 +123,7 @@ export default function AdminDashboard() {
         </button>
       </header>
 
-      <main className="container mx-auto px-4 sm:px-8 py-12 lg:py-20 max-w-7xl">
+      <main className="admin-main container mx-auto px-4 sm:px-8 py-12 lg:py-20 max-w-7xl">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
