@@ -113,11 +113,11 @@ export default function Footer() {
         <div className="footer-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1rem' }}>
           <nav className="footer-nav" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
             {[
-              { href: '/',          label: 'Home' },
-              { href: '/about',     label: 'About' },
-              { href: '/services',  label: 'Pillars' },
-              { href: '/contact',   label: 'Inquiry' },
-              { href: '/newsletter',label: 'Letter' },
+              { href: '/',         label: 'Home' },
+              { href: '/about',    label: 'About' },
+              { href: '/services', label: 'Pillars' },
+              { href: '/audit',    label: 'Audit' },
+              { href: '/contact',  label: 'Inquiry' },
             ].map(item => (
               <Link
                 key={item.href}
