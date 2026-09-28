@@ -53,6 +53,7 @@ export default function CookieBanner() {
             boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
             backdropFilter: 'blur(12px)',
           }}
+          className="cookie-banner"
           role="dialog"
           aria-label="Cookie consent"
         >
@@ -77,6 +78,27 @@ export default function CookieBanner() {
               .
             </p>
           </div>
+
+          <style>{`
+            @media (max-width: 767px) {
+              .cookie-banner {
+                width: calc(100% - 1.5rem) !important;
+                padding: 1rem 1.25rem !important;
+                bottom: 1rem !important;
+              }
+              .cookie-banner > div:first-child {
+                min-width: 100% !important;
+                margin-bottom: 1rem !important;
+              }
+              .cookie-banner > div:last-child {
+                width: 100% !important;
+                justify-content: space-between !important;
+              }
+              .cookie-banner button {
+                flex: 1 !important;
+              }
+            }
+          `}</style>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexShrink: 0 }}>
             <button

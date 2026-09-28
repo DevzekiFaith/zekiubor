@@ -79,7 +79,7 @@ export default function About() {
         }
       `}</style>
       {/* Light subtle architectural ambient glow */}
-      <div className="ambient-glow-wrapper">
+      <div className="ambient-glow-wrapper" style={{ opacity: 0.6 }}>
         <div className="ambient-orb-gold top-[-5%] left-[-10%]" />
         <div className="ambient-orb-blue top-[40%] right-[-10%]" />
         <div className="ambient-orb-purple bottom-[10%] left-[5%]" />

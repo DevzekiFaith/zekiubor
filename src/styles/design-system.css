@@ -366,6 +366,7 @@ body {
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  will-change: transform;
 }
 
 .ambient-orb-gold {
@@ -373,8 +374,8 @@ body {
   width: clamp(350px, 45vw, 650px);
   height: clamp(350px, 45vw, 650px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 130, 45, 0.07) 0%, transparent 70%);
-  filter: blur(40px);
+  background: radial-gradient(circle, rgba(168, 130, 45, 0.05) 0%, transparent 70%);
+  filter: blur(30px);
   animation: orb-drift 22s ease-in-out infinite alternate;
 }
 
@@ -383,8 +384,8 @@ body {
   width: clamp(300px, 40vw, 550px);
   height: clamp(300px, 40vw, 550px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 215, 235, 0.25) 0%, transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(circle, rgba(200, 215, 235, 0.15) 0%, transparent 70%);
+  filter: blur(35px);
   animation: orb-drift 26s ease-in-out infinite alternate-reverse;
 }
 
@@ -393,8 +394,8 @@ body {
   width: clamp(250px, 35vw, 500px);
   height: clamp(250px, 35vw, 500px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 220, 240, 0.25) 0%, transparent 70%);
-  filter: blur(45px);
+  background: radial-gradient(circle, rgba(230, 220, 240, 0.15) 0%, transparent 70%);
+  filter: blur(35px);
   animation: orb-drift 20s ease-in-out infinite alternate;
 }
 

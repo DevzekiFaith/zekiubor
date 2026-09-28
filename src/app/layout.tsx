@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/next";
 import CookieBanner from "@/components/CookieBanner/CookieBanner";
+import PageTransition from "@/components/PageTransition/PageTransition";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -195,7 +196,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${cormorantGaramond.variable} antialiased overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider>
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
           <CookieBanner />
         </ThemeProvider>
         <Analytics />
