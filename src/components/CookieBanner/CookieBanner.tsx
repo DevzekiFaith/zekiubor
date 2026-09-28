@@ -36,10 +36,11 @@ export default function CookieBanner() {
           style={{
             position: 'fixed',
             bottom: '1.5rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: 'calc(100% - 3rem)',
+            left: '1.5rem',
+            right: '1.5rem',
+            width: 'auto',
             maxWidth: 680,
+            margin: '0 auto',
             zIndex: 9999,
             background: 'var(--bg-alt)',
             border: '1px solid var(--border-strong)',
@@ -82,7 +83,8 @@ export default function CookieBanner() {
           <style>{`
             @media (max-width: 767px) {
               .cookie-banner {
-                width: calc(100% - 1.5rem) !important;
+                left: 1rem !important;
+                right: 1rem !important;
                 padding: 1rem 1.25rem !important;
                 bottom: 1rem !important;
               }
