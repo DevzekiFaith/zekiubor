@@ -213,7 +213,7 @@ export default function Home() {
               {[
                 { num: '40%',     label: 'Burnout Reduction',      sub: 'Through cognitive load restructuring' },
                 { num: '15+ Hrs', label: 'Saved Weekly',            sub: 'Eliminating decision friction' },
-                { num: '5 Layers',label: 'Potential Diagnostic',    sub: 'Holistic human architecture' },
+                { num: '5 Layers',label: 'Human Architecture',      sub: 'Holistic leadership frameworks' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}

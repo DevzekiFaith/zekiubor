@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/next";
 import CookieBanner from "@/components/CookieBanner/CookieBanner";
 import PageTransition from "@/components/PageTransition/PageTransition";
+import WhatsAppConcierge from "@/components/WhatsAppConcierge/WhatsAppConcierge";
+import BookingModal from "@/components/BookingModal/BookingModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -48,7 +50,6 @@ export const metadata: Metadata = {
     "Founder Coaching",
     "Leadership Development Nigeria",
     "Human Potential",
-    "Architecture Audit",
     "mindvestglobalresources",
     "Mindvest Global Resources",
     "Pan-African Leadership",
@@ -124,7 +125,7 @@ export default function RootLayout({
         jobTitle: "Human Architecture Strategist",
         description: "Zeki Ubor is a Human Architecture Strategist who helps founders, executives, and visionaries rebuild identity architecture, eliminate decision friction, and scale sustainable leadership impact.",
         sameAs: [
-          "https://linkedin.com/in/zekiubor",
+          "https://www.linkedin.com/in/zekiubor",
           "https://x.com/zekiubor",
           "https://instagram.com/zekiubor",
           "https://youtube.com/@zekiubor",
@@ -200,6 +201,8 @@ export default function RootLayout({
             {children}
           </PageTransition>
           <CookieBanner />
+          <WhatsAppConcierge />
+          <BookingModal />
         </ThemeProvider>
         <Analytics />
       </body>

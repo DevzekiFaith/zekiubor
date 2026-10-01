@@ -24,7 +24,7 @@ export default function About() {
   ];
 
   const cycle = [
-    { step: 'B', title: 'Baseline',           desc: 'Audit where you are with radical honesty — uncovering the invisible hairline fractures in internal identity and decision flow before they trigger crisis.' },
+    { step: 'B', title: 'Baseline',           desc: 'Assess where you are with radical honesty — uncovering the invisible hairline fractures in internal identity and decision flow before they trigger crisis.' },
     { step: 'U', title: 'Uncover',            desc: 'Surface the beliefs, patterns, and inherited foundations that have been silently driving your architecture without your knowledge or consent.' },
     { step: 'I', title: 'Intentional Design', desc: 'Deliberately redesign each layer — starting with identity and purpose, moving through mindset, systems, and into expression and impact.' },
     { step: 'L', title: 'Layer & Live',       desc: 'Integrate the new architecture into daily life, leadership cadences, and decision-making with precision and non-negotiable discipline.' },
@@ -261,7 +261,7 @@ export default function About() {
                     <HiArrowRight style={{ width: 13, height: 13 }} />
                   </Link>
                   <Link href="/contact" className="ed-btn">
-                    Schedule Diagnostic
+                    Initiate Inquiry
                   </Link>
                 </div>
               </motion.div>

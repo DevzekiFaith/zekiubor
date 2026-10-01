@@ -6,31 +6,47 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:vinext": "vite dev --port 3001",
+    "build:vinext": "vite build",
+    "start:vinext": "vite preview",
+    "deploy:vinext": "vinext-cloudflare deploy --warm-cache",
+    "deploy:response-store": "cf deploy --prebuilt --mode production --worker work-web-response-store"
   },
   "dependencies": {
+    "@cloudflare/workers-response-store": "^1.0.1",
     "@headlessui/react": "^2.2.7",
     "@supabase/supabase-js": "^2.78.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@vercel/analytics": "^1.5.0",
+    "@vinext/cloudflare": "^1.0.1",
     "framer-motion": "^12.23.12",
     "next": "^16.2.2",
     "postcss": "^8.5.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-server-dom-webpack": "^19.3.0",
     "resend": "^6.4.0",
     "swiper": "^11.2.10",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "vinext": "^1.0.1"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^2.0.0-beta.sha-52b0dc0e9",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-rsc": "^0.5.35",
+    "cf": "^1.0.0-beta.10",
     "eslint": "^9",
     "eslint-config-next": "latest",
-    "typescript": "^5"
-  }
+    "typescript": "^5",
+    "vite": "^8.3.0",
+    "vite-css-modules": "^1.16.0"
+  },
+  "type": "module"
 }

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenu, HiX, HiArrowRight } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function Header() {
     { href: '/',        label: 'Home' },
     { href: '/about',   label: 'About' },
     { href: '/services',label: 'Pillars' },
+    { href: 'https://www.mindvestglobalresources.com.ng/blog', label: 'Notes', external: true },
     { href: '/contact', label: 'Inquiry' },
   ];
 
@@ -37,7 +39,13 @@ export default function Header() {
           <ul className="ed-nav__links">
             {navItems.map(item => (
               <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
+                {item.external ? (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href}>{item.label}</Link>
+                )}
               </li>
             ))}
           </ul>
@@ -124,24 +132,47 @@ export default function Header() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.06 }}
                     >
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        style={{
-                          display: 'block',
-                          padding: '0.85rem 0',
-                          borderBottom: '1px solid var(--border)',
-                          fontFamily: 'var(--font-display)',
-                          fontSize: '1.5rem',
-                          fontWeight: 600,
-                          color: 'var(--text)',
-                          textDecoration: 'none',
-                          letterSpacing: '-0.01em',
-                          transition: 'color 0.2s ease',
-                        }}
-                      >
-                        {item.label}
-                      </Link>
+                      {item.external ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsOpen(false)}
+                          style={{
+                            display: 'block',
+                            padding: '0.85rem 0',
+                            borderBottom: '1px solid var(--border)',
+                            fontFamily: 'var(--font-display)',
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            color: 'var(--text)',
+                            textDecoration: 'none',
+                            letterSpacing: '-0.01em',
+                            transition: 'color 0.2s ease',
+                          }}
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          style={{
+                            display: 'block',
+                            padding: '0.85rem 0',
+                            borderBottom: '1px solid var(--border)',
+                            fontFamily: 'var(--font-display)',
+                            fontSize: '1.5rem',
+                            fontWeight: 600,
+                            color: 'var(--text)',
+                            textDecoration: 'none',
+                            letterSpacing: '-0.01em',
+                            transition: 'color 0.2s ease',
+                          }}
+                        >
+                          {item.label}
+                        </Link>
+                      )}
                     </motion.div>
                   ))}
                 </nav>
@@ -150,20 +181,38 @@ export default function Header() {
                 <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <a
-                      href="tel:+2349119059859"
+                      href="https://wa.me/2349119059859?text=Hello%20Zeki%2C%20I%20am%20reaching%20out%20via%20your%20website"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0.5rem',
+                        gap: '0.6rem',
                         fontSize: '0.9rem',
                         color: 'var(--text-muted)',
                         textDecoration: 'none',
                         transition: 'color 0.2s ease',
                       }}
-                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--gold)')}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#25D366')}
                       onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
                     >
-                      +234 911 905 9859
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 22,
+                          height: 22,
+                          borderRadius: '50%',
+                          background: '#25D366',
+                          color: '#fff',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <FaWhatsapp style={{ width: 12, height: 12 }} />
+                      </span>
+                      <span>+234 911 905 9859</span>
+                      <span style={{ fontSize: '10px', color: '#25D366', fontWeight: 600 }}>WhatsApp</span>
                     </a>
                     <a
                       href="mailto:lightwavesupport@gmail.com"

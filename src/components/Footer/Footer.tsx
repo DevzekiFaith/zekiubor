@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const socials = [
-  { name: 'LinkedIn',  icon: FaLinkedinIn, href: 'https://linkedin.com/in/zekiubor' },
-  { name: 'X / Twitter',icon: FaXTwitter,   href: 'https://x.com/zekiubor' },
-  { name: 'Instagram', icon: FaInstagram,   href: 'https://instagram.com/zekiubor' },
-  { name: 'YouTube',   icon: FaYoutube,     href: 'https://youtube.com/@zekiubor' },
-  { name: 'WhatsApp',  icon: FaWhatsapp,    href: 'https://wa.me/2349119059859' },
+  { name: 'LinkedIn · Zeki Ubor', icon: FaLinkedinIn, href: 'https://www.linkedin.com/in/zekiubor' },
+  { name: 'WhatsApp Direct',      icon: FaWhatsapp,   href: 'https://wa.me/2349119059859?text=Hello%20Zeki%2C%20I%20would%20like%20to%20connect%20with%20you' },
+  { name: 'X / Twitter',          icon: FaXTwitter,  href: 'https://x.com/zekiubor' },
+  { name: 'Instagram',            icon: FaInstagram,  href: 'https://instagram.com/zekiubor' },
+  { name: 'YouTube',              icon: FaYoutube,    href: 'https://youtube.com/@zekiubor' },
 ];
 
 export default function Footer() {
@@ -116,61 +116,80 @@ export default function Footer() {
               { href: '/',         label: 'Home' },
               { href: '/about',    label: 'About' },
               { href: '/services', label: 'Pillars' },
-              { href: '/audit',    label: 'Audit' },
+              { href: 'https://www.mindvestglobalresources.com.ng/blog', label: 'Notes', external: true },
               { href: '/contact',  label: 'Inquiry' },
-            ].map(item => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="ed-label"
-                style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
-              >
-                {item.label}
-              </Link>
-            ))}
+            ].map(item =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ed-label"
+                  style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="ed-label"
+                  style={{ textDecoration: 'none', transition: 'color 0.2s ease' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="footer-contact" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            {/* Phone + WhatsApp */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-              <a
-                href="tel:+2349119059859"
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  letterSpacing: '0.18em',
-                  color: 'var(--text-subtle)',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s ease',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
-              >
-                +234 911 905 9859
-              </a>
-              <motion.a
-                href="https://wa.me/2349119059859"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                whileHover={{ scale: 1.2, rotate: 5 }}
+            {/* WhatsApp direct link */}
+            <motion.a
+              href="https://wa.me/2349119059859?text=Hello%20Zeki%2C%20I%20am%20reaching%20out%20via%20your%20website"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contact Zeki Ubor on WhatsApp (+234 911 905 9859)"
+              whileHover={{ y: -1 }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.15em',
+                color: 'var(--text-subtle)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#25D366')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-subtle)')}
+            >
+              <span
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: 24,
-                  height: 24,
+                  width: 22,
+                  height: 22,
                   borderRadius: '50%',
                   background: '#25D366',
                   color: '#fff',
                   flexShrink: 0,
+                  boxShadow: '0 2px 8px rgba(37, 211, 102, 0.25)',
                 }}
               >
-                <FaWhatsapp style={{ width: 13, height: 13 }} />
-              </motion.a>
-            </div>
+                <FaWhatsapp style={{ width: 12, height: 12 }} />
+              </span>
+              <span>+234 911 905 9859</span>
+              <span style={{ fontSize: '9px', opacity: 0.8, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#25D366' }}>
+                (WhatsApp)
+              </span>
+            </motion.a>
             <a
               href="mailto:lightwavesupport@gmail.com"
               style={{

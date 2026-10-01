@@ -69,7 +69,7 @@ export default function Services() {
   ];
 
   const process = [
-    { step: 'B', title: 'Baseline',           desc: 'Audit where you are with radical honesty using the Architecture Diagnostic — uncovering the invisible hairline fractures before they trigger crisis.' },
+    { step: 'B', title: 'Baseline',           desc: 'Examine where you are with radical honesty — uncovering the invisible hairline fractures before they trigger crisis.' },
     { step: 'U', title: 'Uncover',            desc: 'Surface the beliefs, patterns, and inherited foundations that have been silently driving your architecture without your consent.' },
     { step: 'I', title: 'Intentional Design', desc: 'Deliberately redesign each layer — starting with identity and purpose, moving through mindset, systems, relationships, and into expression.' },
     { step: 'L', title: 'Layer & Live',       desc: 'Integrate the new architecture into daily life, leadership cadences, and institutional decision-making with precision.' },

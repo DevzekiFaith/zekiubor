@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { HiArrowRight, HiCheckCircle } from 'react-icons/hi';
+import { FaCalendarAlt, FaWhatsapp } from 'react-icons/fa';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import TiltCard from '@/components/TiltCard/TiltCard';
 import { Toaster, toast } from 'react-hot-toast';
+import { openBookingModal } from '@/components/BookingModal/BookingModal';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -155,11 +157,43 @@ export default function Contact() {
         <section className="ed-section" style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="ed-wrap">
             <div className="ed-grid-2" style={{ alignItems: 'start', gap: 'clamp(3rem, 7vw, 7rem)' }}>
-              {/* Left Column: Glass Form */}
+              {/* Left Column: Glass Form & Fast-Track Calendar */}
               <motion.div {...fadeUp}>
-                <span className="ed-label" style={{ display: 'block', marginBottom: '2rem' }}>
-                  [ Strategic Inquiry Form ]
-                </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <span className="ed-label">
+                    [ Strategic Inquiry Form ]
+                  </span>
+                  <button
+                    onClick={() => openBookingModal()}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      background: 'rgba(226,190,120,0.12)',
+                      border: '1px solid var(--gold)',
+                      borderRadius: '4px',
+                      color: 'var(--gold)',
+                      padding: '4px 10px',
+                      fontSize: '10px',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      transition: 'all 0.2s',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'var(--gold)';
+                      e.currentTarget.style.color = '#000';
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'rgba(226,190,120,0.12)';
+                      e.currentTarget.style.color = 'var(--gold)';
+                    }}
+                  >
+                    <FaCalendarAlt style={{ width: 11, height: 11 }} />
+                    <span>Skip to Calendar Booking</span>
+                  </button>
+                </div>
 
                 {submitted ? (
                   <div
@@ -289,7 +323,7 @@ export default function Contact() {
                       {
                         title: 'Mindvest Global',
                         email: 'enterprise@zekiubor.com',
-                        desc: 'Enterprise culture architecture, keynotes, and institutional audits.',
+                        desc: 'Enterprise culture architecture, keynotes, and institutional design.',
                       },
                     ].map((channel, i) => (
                       <TiltCard key={i} maxTilt={6} scale={1.015}>
